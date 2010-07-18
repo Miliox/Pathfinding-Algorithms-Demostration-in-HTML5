@@ -8,23 +8,36 @@
 		<meta name="author" content="Emiliano Carlos de Moraes Firmino"/>
 		<meta name="copyright" content="©Laboratório de Pós Graduação 2010"/>
 		<meta name="classification" content=""/>
+		<script type="text/javascript" src="js/main.js"></script>
+		<style type="text/css">@import url("css/style.css");</style>
 	</head>
 	<body>
+	<div id="pagina">
 		<header>
 			<h1>Pathfinding</h1>
-			<p>Demonstração</p>
+			<p>Demonstração dos Algoritmos</p>
 		</header>
 		<div>
+			<canvas id="grid">Você precisa de um browser compatível com HTML5</canvas>
 			<aside>
+				<form id="choice">
+					<input type="radio" name="algorithm" value="bfs" checked/>BFS
+					<input type="radio" name="algorithm" value="bidi" />BIDI
+					<input type="radio" name="algorithm" value="ucs" />UCS
+					<input type="radio" name="algorithm" value="bestfs" />Best-FS
+					<input type="radio" name="algorithm" value="astar" />A*
+				</form>
 			</aside>
-			<canvas></canvas>
 			<div>
 			</div>
 		</div>
 		<footer>
-			<p>Emiliano Carlos de Moraes Firmino</p>
-			<p>©Laboratório de Pós Graduação</p>
-			<p>©PAIC</p>
+			<p>
+				©Emiliano Carlos de Moraes Firmino<br />
+				©Laboratório de Pós Graduação<br />
+				©PAIC
+			</p>
 		</footer>
+	</div>
 	</body>
 </html>

@@ -1,0 +1,17 @@
+header {
+	position: relative;
+	width: 640px;
+}
+aside {
+}
+canvas {
+	width: 640px;
+	height: 480px;
+	border: 1px solid black;
+}
+#pagina {
+	position: relative;
+	width: 640px;
+	left: 50%;
+	margin-left: -320px;
+}
