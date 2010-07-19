@@ -29,6 +29,10 @@ function runPathFinding(){
 	var option = getChoice();
 	graphic.render();
 }
+function clearPathFinding(){
+	graph = new Graph(mapa);
+	graphic.render();
+}
 function Graphic(canvas, linesX, linesY){
 	this.canvas = canvas;
 	this.context = canvas.getContext("2d");
@@ -43,6 +47,7 @@ Graphic.prototype.render = function () {
 	for(var i = 0; i < graph.grid.length; i++){
 		for(var j = 0; j < graph.grid[i].length; j++){
 			graphic.drawBox(j, i, graph.grid[i][j].cor);
+			graphic.drawText(j, i, graph.grid[i][j].text);
 		}
 	}
 	graphic.drawBox(origem.x, origem.y, "rgba(255,0,0,0.5)");
@@ -50,7 +55,6 @@ Graphic.prototype.render = function () {
 	this.drawGridLines();
 };
 Graphic.prototype.drawGridLines = function () {
-
 	this.context.beginPath();
 	for(var line = 0; line < this.linesY; line++){
 		this.context.moveTo(0, line * this.tileY - 0.5);
@@ -62,7 +66,7 @@ Graphic.prototype.drawGridLines = function () {
 	}
 	this.context.stroke();
 };
-Graphic.prototype.drawPoint = function (x, y, text){
+Graphic.prototype.drawText = function (x, y, text){
 	this.context.save();
 	this.context.font = "24pt Arial";
 	this.context.textAlign ="center";
@@ -84,26 +88,105 @@ function Graph(gameGrid){
 		for(var i = 0;i < gameGrid[j].length; i++){
 			switch(gameGrid[j][i]){
 				case 2:
-					this.grid[j][i] = {custo : 3, block : false, cor : "#BBBBBB"};
+					this.grid[j][i] = {custo : 3, block : false, cor : "#BBBBBB", text : ""};
 					break;
 				case 1:
-					this.grid[j][i] = {custo : 2, block : false, cor : "#DDDDDD"};
+					this.grid[j][i] = {custo : 2, block : false, cor : "#DDDDDD", text : ""};
 					break;
 				case 0:
-					this.grid[j][i] = {custo : 1, block : false, cor : "white"};
+					this.grid[j][i] = {custo : 1, block : false, cor : "white", text : ""};
 					break;
 				case -1:
-					this.grid[j][i] = {custo : -1,block : true, cor : "black"}
+					this.grid[j][i] = {custo : -1,block : true, cor : "black", text : ""}
 					break;
 			}
 		}
 	}
 }
 var graphic;
+function aStarPathFind(originInLimitedMap, destinyInLimitedMap, limitedMap){
+	//funcoes
+	var estimatedCost = function (nodeStart, nodeEnd) {
+		var dx = nodeStart.x - nodeEnd.x;
+		var dy = nodeStart.y - nodeEnd.y;
+
+		var d = Math.abs(dx) + Math.abs(dy);
+		return d;
+	};
+	var insertNodeInPQ = function (priorQueue, limitedMap, nodeToInsertPos) {
+		var nodePos, nodeContent;
+		var nodeToInsertContent = limitedMap.getCell(nodeToInsertPos);
+		var nodeToInsertTotal = nodeToInsertContent.custo + nodeToInsertContent.estimado;
+		if(priorQueue.length === 0){
+			priorQueue.unshift(nodeToInsertPos);
+			return;
+		}
+		else{
+			for(var i = 0; i < priorQueue.length; i++){
+				nodePos = priorQueue[i];
+				nodeContent = limitedMap.getCell(nodePos);
+				if(nodeContent.custo + nodeContent.estimado > nodeToInsertTotal){
+					priorQueue.splice(i,0,nodeToInsertPos);
+					return;
+				}
+			}
+			priorQueue.push(nodeToInsertPos);
+			return;
+		}
+	};
+	//direcoes
+	var vec_unit =	[
+			{x : 0, y : -1},
+			{x : 1, y : 0},
+			{x : 0, y : 1},
+			{x : -1, y : -1},
+			];
+
+	var nodeToEvaluate;
+	var nodeToEvaluateContent;
+	var nodeInLimitedMap;
+	var nodesPriorityQueue = [];
+
+	nodesPriorityQueue.push(originInLimitedMap);
+	while(nodesPriorityQueue.length > 0){
+		nodeToEvaluate = nodesPriorityQueue.shift();
+		nodeToEvaluateContent = limitedMap[nodeToEvaluate.y][nodeToEvaluate.x];
+		for(var direcao = 0; direcao < vec_unit.length; direcao++){
+			nodeInLimitedMap = {x: nodeToEvaluate.x + vec_unit[direcao].x, y: nodeToEvaluate.x + vec_unit[direcao].y};
+			switch(limitednodeInLimitedMap){
+				case 0://destino
+					limitedMap.setCell(nodeInLimitedMap,
+						createNodeContent(direcao, nodeToEvaluate, nodeToEvaluateContent.custo+1,
+								estimatedCost(nodeInLimitedMap, destinyInLimitedMap)));
+					insertNodeInPQ(nodesPriorityQueue,limitedMap,nodeInLimitedMap);
+					for(var i = 0; i < 70; i++){
+						this.path.unshift((limitedMap.getCell(nodeInLimitedMap)).sentido);
+						nodeInLimitedMap = (limitedMap.getCell(nodeInLimitedMap)).origem;
+						if(nodeInLimitedMap.equals(originInLimitedMap)){ return; }
+					}
+					return;
+				case 1://nao visitado
+					limitedMap.setCell(nodeInLimitedMap,
+						createNodeContent(direcao, nodeToEvaluate, nodeToEvaluateContent.custo+1,
+							estimatedCost(nodeInLimitedMap, destinyInLimitedMap)));
+					insertNodeInPQ(nodesPriorityQueue,limitedMap,nodeInLimitedMap);
+					break;
+				case 2://visitado
+					break;
+				case 3://invalido
+					limitedMap.setWallCell(nodeInLimitedMap);
+					break;
+			}
+		}
+	}
+
+};
 
 function init(){
 	var botao = document.getElementById("run");
 	botao.onclick = runPathFinding;
+	var botao = document.getElementById("clear");
+	botao.onclick = clearPathFinding;
 	graphic = new Graphic(document.getElementById("grid"),mapa[0].length,mapa.length);
 	graph = new Graph(mapa);
 	graphic.render();
