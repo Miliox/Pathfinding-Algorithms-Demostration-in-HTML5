@@ -18,9 +18,8 @@ function Graph(gameGrid){
 					node = this.createNode( -1, true, "black", "");
 					break;
 			}
-			this.grid[j][i] = node;
 		}
-		
+		this.grid[j][i] = node;
 	}
 }
 Graph.prototype.createNode = function(_custo, _blocked, _cor, _text) {
