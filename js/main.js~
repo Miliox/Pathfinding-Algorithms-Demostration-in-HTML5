@@ -35,6 +35,7 @@ function clearPathFinding(){
 }
 
 var graph;
+
 var graphic;
 function aStarPathFind(originInLimitedMap, destinyInLimitedMap, limitedMap){
 	//funcoes
