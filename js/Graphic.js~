@@ -33,7 +33,7 @@ Graphic.prototype.drawGridLines = function () {
 };
 Graphic.prototype.drawText = function (x, y, text){
 	this.context.save();
-	this.context.font = "14pt Georgia";
+	this.context.font = "15pt Georgia";
 	this.context.textAlign ="center";
 	this.context.textBaseline = "middle";
 	this.context.fillText(text, this.tileX * x + this.tileX/2, this.tileY * y + this.tileY/2, this.tileX);

@@ -6,10 +6,10 @@ function Graph(gameGrid){
 		for(var i = 0;i < gameGrid[j].length; i++){
 			switch(gameGrid[j][i]){
 				case 2:
-					node = this.createNode(3, false, "#BBBBBB", "");
+					node = this.createNode(3, false, "#DDDDDD", "");
 					break;
 				case 1:
-					node = this.createNode(2, false, "#DDDDDD", "");
+					node = this.createNode(2, false, "#BBBBBB", "");
 					break;
 				case 0:
 					node = this.createNode(1, false, "white", "");
