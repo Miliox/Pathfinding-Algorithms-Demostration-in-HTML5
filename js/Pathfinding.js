@@ -107,13 +107,13 @@ GenericSearchPath.prototype.getAdjacentNodes = function (node, parent) {
 	SW = {x: node.x - 1, y: node.y + 1};
 
 	list.push(N);
-	list.push(NE);
+	//list.push(NE);
 	list.push(E);
-	list.push(SE);
+	//list.push(SE);
 	list.push(S);
-	list.push(SW);
+	//list.push(SW);
 	list.push(W);
-	list.push(NW);
+	//list.push(NW);
 	//return [N, NE, E, SE, S, SW, W, NW];
 	return list;
 };
@@ -236,6 +236,6 @@ bestFirstSearchPath.prototype.setEstimatedValue = function (childrenNode, parent
 	var deltaY = Math.abs(childrenNode.y - this.end.y);
 	var deltaXSquare = Math.pow(deltaX,2);
 	var deltaYSquare = Math.pow(deltaY,2);
-	this.searchGraph.getNodeContent(childrenNode).estimado = deltaXSquare + deltaYSquare;
+	this.searchGraph.getNodeContent(childrenNode).estimado = pow((deltaXSquare + deltaYSquare),2);
 };
 
