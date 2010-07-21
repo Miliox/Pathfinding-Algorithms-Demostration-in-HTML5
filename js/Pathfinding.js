@@ -129,13 +129,23 @@ GenericSearchPath.prototype.backtrackingPath = function (childrenNode) {
 		content.cor = "yellow";
 	} while(oldNode.x !== childrenNode.x || oldNode.y !== childrenNode.y);
 };
-function aStarSearchPath(graph){
+//BFS <- GenericSearchPath
+function BreadthFirstSearchPath(graph){
 	GenericSearchPath.call(this, graph);
 }
-aStarSearchPath.prototype = new GenericSearchPath();
-delete aStarSearchPath.prototype.openNodes;
-delete aStarSearchPath.prototype.searchGraph;
-aStarSearchPath.prototype.addOpenNode = function (nodeInsert) {
+BreadthFirstSearchPath.prototype = new GenericSearchPath();
+delete BreadthFirstSearchPath.prototype.openNodes;
+delete BreadthFirstSearchPath.prototype.searchGraph;
+
+function aStarGenericSearchPath(graph){
+	GenericSearchPath.call(this, graph);
+}
+
+//aStarGenericSearchPath <- GenericSearchPath
+aStarGenericSearchPath.prototype = new GenericSearchPath();
+delete aStarGenericSearchPath.prototype.openNodes;
+delete aStarGenericSearchPath.prototype.searchGraph;
+aStarGenericSearchPath.prototype.addOpenNode = function (nodeInsert) {
 	var nodeOpenContent;
 	var nodeInsertContent = this.searchGraph.getNodeContent(nodeInsert);
 	var total = nodeInsertContent.custo + nodeInsertContent.estimado;
@@ -153,30 +163,40 @@ aStarSearchPath.prototype.addOpenNode = function (nodeInsert) {
 		this.openNodes.push(nodeInsert);
 	}
 };
-aStarSearchPath.prototype.setVisitedNode = function (childrenNode, parentNode) {
+aStarGenericSearchPath.prototype.setVisitedNode = function (childrenNode, parentNode) {
 	GenericSearchPath.prototype.setVisitedNode.call(this, childrenNode, parentNode);
 	var contentChildren = this.searchGraph.getNodeContent(childrenNode);
 	var contentParent = this.searchGraph.getNodeContent(parentNode);
-	contentChildren.estimado = Math.max(Math.abs(childrenNode.x - this.end.x), Math.abs(childrenNode.y - this.end.y));
+	this.setEstimatedValue(childrenNode, parentNode);
+	//contentChildren.estimado = Math.max(Math.abs(childrenNode.x - this.end.x), Math.abs(childrenNode.y - this.end.y));
 	contentChildren.custo = contentParent.terrain*this.getMoveCusto(childrenNode, parentNode) + contentParent.custo;
 };
+aStarGenericSearchPath.prototype.setEstimatedValue = function (childrenNode, parentNode) {
+	//heurística vai aqui!
+};
 
-function Dijkstra(graph){
-	aStarSearchPath.call(this, graph);
+//UniformCostSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+function UniformCostSearchPath(graph){
+	aStarGenericSearchPath.call(this, graph);
 }
-Dijkstra.prototype = new aStarSearchPath();
-delete Dijkstra.prototype.openNodes;
-delete Dijkstra.prototype.searchGraph;
-Dijkstra.prototype.setVisitedNode = function (childrenNode, parentNode) {
-	aStarSearchPath.prototype.setVisitedNode.call(this, childrenNode, parentNode);
-	var contentChildren = this.searchGraph.getNodeContent(childrenNode);
-	contentChildren.estimado = 0;
-}
+UniformCostSearchPath.prototype = new aStarGenericSearchPath();
+delete UniformCostSearchPath.prototype.openNodes;
+delete UniformCostSearchPath.prototype.searchGraph;
+UniformCostSearchPath.prototype.setEstimatedValue = function (childrenNode, parentNode) {
+	this.searchGraph.getNodeContent(childrenNode).estimado = 0;
+};
 
-function BreadthFirstSearchPath(graph){
-	GenericSearchPath.call(this, graph);
+
+//aStarDiagonalDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+function aStarDiagonalDistanceSearchPath(graph){
+	aStarGenericSearchPath.call(this, graph);
 }
-BreadthFirstSearchPath.prototype = new GenericSearchPath();
-delete BreadthFirstSearchPath.prototype.openNodes;
-delete BreadthFirstSearchPath.prototype.searchGraph;
+aStarDiagonalDistanceSearchPath.prototype = new aStarGenericSearchPath();
+delete aStarDiagonalDistanceSearchPath.prototype.openNodes;
+delete aStarDiagonalDistanceSearchPath.prototype.searchGraph;
+aStarDiagonalDistanceSearchPath.prototype.setEstimatedValue = function (childrenNode, parentNode) {
+	this.searchGraph.getNodeContent(childrenNode).estimado = Math.max(Math.abs(childrenNode.x - this.end.x), Math.abs(childrenNode.y - this.end.y));
+};
+
+
 

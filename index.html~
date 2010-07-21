@@ -25,6 +25,7 @@
 			<aside>
 				<form id="choice">
 					<input type="radio" name="algorithm" value="bfs" checked/>BFS
+					<input type="radio" name="algorithm" value="bidi" />BIDI
 					<input type="radio" name="algorithm" value="ucs" />UCS
 					<input type="radio" name="algorithm" value="bestfs" />Best-FS
 					<input type="radio" name="algorithm" value="astar" />A*

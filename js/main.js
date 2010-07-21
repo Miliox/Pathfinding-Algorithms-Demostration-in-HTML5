@@ -29,6 +29,7 @@ function getChoice(){
 
 function runPathFinding(){
 	var option = getChoice();
+	graph = new Graph(mapa);
 /*
 	graph.grid[origem.y][origem.x].text = "Start";
 	graph.grid[destino.y][destino.x].text = "End";
@@ -36,10 +37,10 @@ function runPathFinding(){
 	var game;
 	switch (option) { 
 		case "astar_dd":		
-			game = new aStarSearchPath(graph);
+			game = new aStarDiagonalDistanceSearchPath(graph);
 			break;
 		case "ucs":
-			game = new Dijkstra(graph);
+			game = new UniformCostSearchPath(graph);
 			break;
 		case "bfs":
 			game = new BreadthFirstSearchPath(graph);
