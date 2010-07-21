@@ -29,8 +29,20 @@ function getChoice(){
 
 function runPathFinding(){
 	var option = getChoice();
+/*
 	graph.grid[origem.y][origem.x].text = "Start";
 	graph.grid[destino.y][destino.x].text = "End";
+*/
+	var game;
+	switch (option) { 
+		case "astar_dd":		
+			game = new aStarSearchPath(graph);
+			break;
+		default:
+			game = new aStarSearchPath(graph);
+	}
+	game.searchPath(origem, destino);
+	graph.grid[origem.y][origem.x].text = "";
 	graphic.render();
 }
 function clearPathFinding(){

@@ -24,5 +24,18 @@ function Graph(gameGrid){
 	}
 }
 Graph.prototype.createNode = function(_custo, _blocked, _cor, _text) {
-	return {custo : _custo,block : _blocked, cor : _cor, text : _text};
+	return {
+		terrain : _custo,
+		custo : 0,
+		estimado : 0,
+		blocked : _blocked, 
+		visited : false,
+		parent: null,
+		closed : false,
+		cor : _cor,
+		text : _text
+	};
 }
+Graph.prototype.getNodeContent = function (pos) {
+	return this.grid[pos.y][pos.x];
+};
