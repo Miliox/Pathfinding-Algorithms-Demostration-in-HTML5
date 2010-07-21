@@ -31,8 +31,10 @@
 					<input type="radio" name="algorithm" value="astar_ed" />A*<abbr title="Euclidean Distance">ED</abbr>
 					<input type="radio" name="algorithm" value="astar_md" />A*<abbr title="Manhattan Distance">MD</abbr>
 					<input type="button" value="RUN" id="run"/>
-					<input type="button" value="CLEAR" id="clear"/>
-					<input type="button" value="CHANGE" id="change"/>
+					<input type="button" value="CLEAR" id="clear"/><br />
+					Mapa:
+					<input type="radio" value="aberto" name="mapa" class="mapchoice"/>aberto
+					<input type="radio" value="fechado" name="mapa" class="mapchoice"/>labirinto
 				</form>
 			</aside>
 			<div>
