@@ -25,13 +25,14 @@
 			<aside>
 				<form id="choice">
 					<input type="radio" name="algorithm" value="bfs" checked/>BFS
-					<input type="radio" name="algorithm" value="bidi" />BIDI
 					<input type="radio" name="algorithm" value="ucs" />UCS
 					<input type="radio" name="algorithm" value="bestfs" />Best-FS
-					<input type="radio" name="algorithm" value="astar" />A*
 					<input type="radio" name="algorithm" value="astar_dd" />A*<abbr title="Diagonal Distance">DD</abbr>
+					<input type="radio" name="algorithm" value="astar_ed" />A*<abbr title="Euclidean Distance">ED</abbr>
+					<input type="radio" name="algorithm" value="astar_md" />A*<abbr title="Manhattan Distance">MD</abbr>
 					<input type="button" value="RUN" id="run"/>
 					<input type="button" value="CLEAR" id="clear"/>
+					<input type="button" value="CHANGE" id="change"/>
 				</form>
 			</aside>
 			<div>

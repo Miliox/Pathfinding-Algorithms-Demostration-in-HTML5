@@ -198,5 +198,44 @@ aStarDiagonalDistanceSearchPath.prototype.setEstimatedValue = function (children
 	this.searchGraph.getNodeContent(childrenNode).estimado = Math.max(Math.abs(childrenNode.x - this.end.x), Math.abs(childrenNode.y - this.end.y));
 };
 
+//aStarManhattanDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+function aStarManhattanDistanceSearchPath(graph){
+	aStarGenericSearchPath.call(this, graph);
+}
+aStarManhattanDistanceSearchPath.prototype = new aStarGenericSearchPath();
+delete aStarManhattanDistanceSearchPath.prototype.openNodes;
+delete aStarManhattanDistanceSearchPath.prototype.searchGraph;
+aStarManhattanDistanceSearchPath.prototype.setEstimatedValue = function (childrenNode, parentNode) {
+	this.searchGraph.getNodeContent(childrenNode).estimado = Math.abs(childrenNode.x - this.end.x) + Math.abs(childrenNode.y - this.end.y);
+};
 
+//aStarEuclideanDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+function aStarEuclideanDistanceSearchPath(graph){
+	aStarGenericSearchPath.call(this, graph);
+}
+aStarEuclideanDistanceSearchPath.prototype = new aStarGenericSearchPath();
+delete aStarEuclideanDistanceSearchPath.prototype.openNodes;
+delete aStarEuclideanDistanceSearchPath.prototype.searchGraph;
+aStarEuclideanDistanceSearchPath.prototype.setEstimatedValue = function (childrenNode, parentNode) {
+	var deltaX = Math.abs(childrenNode.x - this.end.x);
+	var deltaY = Math.abs(childrenNode.y - this.end.y);
+	var deltaXSquare = Math.pow(deltaX,2);
+	var deltaYSquare = Math.pow(deltaY,2);
+	this.searchGraph.getNodeContent(childrenNode).estimado = Math.sqrt(deltaXSquare + deltaYSquare);
+};
+
+//bestFirstSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+function bestFirstSearchPath(graph){
+	aStarGenericSearchPath.call(this, graph);
+}
+bestFirstSearchPath.prototype = new aStarGenericSearchPath();
+delete bestFirstSearchPath.prototype.openNodes;
+delete bestFirstSearchPath.prototype.searchGraph;
+bestFirstSearchPath.prototype.setEstimatedValue = function (childrenNode, parentNode) {
+	var deltaX = Math.abs(childrenNode.x - this.end.x);
+	var deltaY = Math.abs(childrenNode.y - this.end.y);
+	var deltaXSquare = Math.pow(deltaX,2);
+	var deltaYSquare = Math.pow(deltaY,2);
+	this.searchGraph.getNodeContent(childrenNode).estimado = deltaXSquare + deltaYSquare;
+};
 

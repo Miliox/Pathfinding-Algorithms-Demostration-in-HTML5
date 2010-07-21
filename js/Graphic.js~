@@ -9,8 +9,8 @@ function Graphic(canvas, linesX, linesY){
 Graphic.prototype.render = function () {
 	this.context.clearRect(0,0, this.canvas.width, this.canvas.height);
 	var cor;
-	for(var i = 0; i < graph.grid.length; i++){
-		for(var j = 0; j < graph.grid[i].length; j++){
+	for(var i = 1; i < graph.grid.length - 1; i++){
+		for(var j = 1; j < graph.grid[i].length-1; j++){
 			graphic.drawBox(j, i, graph.grid[i][j].cor);
 			graphic.drawText(j, i, graph.grid[i][j].text);
 		}
@@ -33,7 +33,7 @@ Graphic.prototype.drawGridLines = function () {
 };
 Graphic.prototype.drawText = function (x, y, text){
 	this.context.save();
-	this.context.font = "15pt Georgia";
+	this.context.font = "14pt Georgia";
 	this.context.textAlign ="center";
 	this.context.textBaseline = "middle";
 	this.context.fillText(text, this.tileX * x + this.tileX/2, this.tileY * y + this.tileY/2, this.tileX);
