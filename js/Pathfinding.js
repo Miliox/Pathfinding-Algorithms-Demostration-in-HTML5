@@ -160,3 +160,23 @@ aStarSearchPath.prototype.setVisitedNode = function (childrenNode, parentNode) {
 	contentChildren.estimado = Math.max(Math.abs(childrenNode.x - this.end.x), Math.abs(childrenNode.y - this.end.y));
 	contentChildren.custo = contentParent.terrain*this.getMoveCusto(childrenNode, parentNode) + contentParent.custo;
 };
+
+function Dijkstra(graph){
+	aStarSearchPath.call(this, graph);
+}
+Dijkstra.prototype = new aStarSearchPath();
+delete Dijkstra.prototype.openNodes;
+delete Dijkstra.prototype.searchGraph;
+Dijkstra.prototype.setVisitedNode = function (childrenNode, parentNode) {
+	aStarSearchPath.prototype.setVisitedNode.call(this, childrenNode, parentNode);
+	var contentChildren = this.searchGraph.getNodeContent(childrenNode);
+	contentChildren.estimado = 0;
+}
+
+function BreadthFirstSearchPath(graph){
+	GenericSearchPath.call(this, graph);
+}
+BreadthFirstSearchPath.prototype = new GenericSearchPath();
+delete BreadthFirstSearchPath.prototype.openNodes;
+delete BreadthFirstSearchPath.prototype.searchGraph;
+
