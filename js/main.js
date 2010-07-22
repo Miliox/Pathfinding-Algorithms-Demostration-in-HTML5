@@ -155,7 +155,33 @@ function runPathFinding(){
 	graph.grid[origem.y][origem.x].text = "";
 	graphic.render();
 	var output = document.getElementById("custo");
-	output.textContent = "Custo Total: " + (graph.grid[destino.y][destino.x].custo).toFixed(3);
+	var node, tiles = 0, tilesClosed = 0, tilesVisited = 0, tilesOpen = 0;
+	var i, j;
+	for (j = 1; j < graph.grid.length - 1; j++){
+		for (i = 1; i < graph.grid[j].length - 1; i++){
+			node = graph.grid[j][i];
+			if(node.blocked === false){
+				tiles++;
+				if(node.visited === true){
+					tilesVisited++;
+					if(node.closed === false){
+						tilesOpen++;
+					}
+					else{
+						tilesClosed++;
+					}
+				}
+			}
+		
+		}
+	}
+	output.textContent = "Estatística:\n";
+	output.textContent += "Total de Nós: " + tiles + "\n";
+	output.textContent += "Nós Visitados: " + tilesVisited + "\n";
+	output.textContent += "Nós não visitados: " + (tiles - tilesVisited) + "\n";
+	output.textContent += "Nós Abertos: " + tilesOpen + "\n";
+	output.textContent += "Nós Fechados: " + tilesClosed + "\n";
+	output.textContent += "Custo Total: " + (graph.grid[destino.y][destino.x].custo).toFixed(3);
 }
 function clearPathFinding(){
 	setTypeMap();
