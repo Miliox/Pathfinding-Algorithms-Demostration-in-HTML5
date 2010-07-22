@@ -6,10 +6,10 @@ function Graph(gameGrid){
 		for(var i = 0;i < gameGrid[j].length; i++){
 			switch(gameGrid[j][i]){
 				case 3:
-					node = this.createNode(3, false, "#888888", "");
-					break;				
+					node = this.createNode(8, false, "#888888", "");
+					break;
 				case 2:
-					node = this.createNode(3, false, "#BBBBBB", "");
+					node = this.createNode(4, false, "#BBBBBB", "");
 					break;
 				case 1:
 					node = this.createNode(2, false, "#DDDDDD", "");
@@ -23,7 +23,6 @@ function Graph(gameGrid){
 			}
 			this.grid[j][i] = node;
 		}
-		
 	}
 }
 Graph.prototype.createNode = function(_custo, _blocked, _cor, _text) {

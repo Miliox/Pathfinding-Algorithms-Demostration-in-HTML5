@@ -94,7 +94,6 @@ GenericSearchPath.prototype.getMoveCusto = function (childrenNode, parentNode) {
 };
 GenericSearchPath.prototype.getAdjacentNodes = function (node, parent) {
 	var N, NE, NW, W, E, S, SW, SE;
-	var list = [];
 	N = {x: node.x + 0, y: node.y - 1};
 	NE = {x: node.x + 1, y: node.y - 1};
 	NW = {x: node.x - 1, y: node.y - 1};
@@ -106,16 +105,12 @@ GenericSearchPath.prototype.getAdjacentNodes = function (node, parent) {
 	SE = {x: node.x + 1, y: node.y + 1};
 	SW = {x: node.x - 1, y: node.y + 1};
 
-	list.push(N);
-	list.push(NE);
-	list.push(E);
-	list.push(SE);
-	list.push(S);
-	list.push(SW);
-	list.push(W);
-	list.push(NW);
-	//return [N, NE, E, SE, S, SW, W, NW];
-	return list;
+	if(eightEdges){
+		return [N, NE, E, SE, S, SW, W, NW]
+	}
+	else{
+		return [N, E, S, W]	
+	}
 };
 GenericSearchPath.prototype.backtrackingPath = function (childrenNode) {
 	var parentNode;
