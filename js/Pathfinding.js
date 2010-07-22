@@ -107,17 +107,17 @@ GenericSearchPath.prototype.getAdjacentNodes = function (node, parent) {
 	SW = {x: node.x - 1, y: node.y + 1};
 
 	list.push(N);
-	//list.push(NE);
+	list.push(NE);
 	list.push(E);
-	//list.push(SE);
+	list.push(SE);
 	list.push(S);
-	//list.push(SW);
+	list.push(SW);
 	list.push(W);
-	//list.push(NW);
+	list.push(NW);
 	//return [N, NE, E, SE, S, SW, W, NW];
 	return list;
 };
-GenericSearchPath.prototype.backtrackingPath = function (childrenNode) {	
+GenericSearchPath.prototype.backtrackingPath = function (childrenNode) {
 	var parentNode;
 	var oldNode;
 	var content;

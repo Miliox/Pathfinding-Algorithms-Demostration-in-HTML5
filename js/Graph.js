@@ -5,11 +5,14 @@ function Graph(gameGrid){
 		this.grid[j] = new Array(gameGrid[j].length);
 		for(var i = 0;i < gameGrid[j].length; i++){
 			switch(gameGrid[j][i]){
+				case 3:
+					node = this.createNode(3, false, "#888888", "");
+					break;				
 				case 2:
-					node = this.createNode(3, false, "#DDDDDD", "");
+					node = this.createNode(3, false, "#BBBBBB", "");
 					break;
 				case 1:
-					node = this.createNode(2, false, "#BBBBBB", "");
+					node = this.createNode(2, false, "#DDDDDD", "");
 					break;
 				case 0:
 					node = this.createNode(1, false, "white", "");
