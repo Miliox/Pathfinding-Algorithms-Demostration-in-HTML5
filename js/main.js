@@ -181,7 +181,14 @@ function runPathFinding(){
 	output.textContent += "Nós não visitados: " + (tiles - tilesVisited) + "\n";
 	output.textContent += "Nós Abertos: " + tilesOpen + "\n";
 	output.textContent += "Nós Fechados: " + tilesClosed + "\n";
-	output.textContent += "Custo Total: " + (graph.grid[destino.y][destino.x].custo).toFixed(3);
+	var total = (graph.grid[destino.y][destino.x].custo);
+	if(total <= 0){
+		total = "???";
+	}
+	else{
+		total = total.toFixed(3);
+	}
+	output.textContent += "Custo Total: " + total;
 }
 function clearPathFinding(){
 	setTypeMap();
