@@ -176,12 +176,48 @@ aStarGenericSearchPath.prototype.setVisitedNode = function (childrenNode, parent
 	GenericSearchPath.prototype.setVisitedNode.call(this, childrenNode, parentNode);
 	var contentChildren = this.searchGraph.getNodeContent(childrenNode);
 	var contentParent = this.searchGraph.getNodeContent(parentNode);
-	this.setEstimatedValue(childrenNode, parentNode);
-	//contentChildren.estimado = Math.max(Math.abs(childrenNode.x - this.end.x), Math.abs(childrenNode.y - this.end.y));
+	contentChildren.estimado = this.getEstimatedValue(childrenNode, parentNode);
 	contentChildren.custo = contentParent.terrain*this.getMoveCusto(childrenNode, parentNode) + contentParent.custo;
 };
-aStarGenericSearchPath.prototype.setEstimatedValue = function (childrenNode, parentNode) {
+aStarGenericSearchPath.prototype.getEstimatedValue = function (childrenNode, parentNode) {
+	return 0;
 	//heurística vai aqui!
+};
+aStarGenericSearchPath.prototype.reviewOpenNode = function(childrenNode, parentNode){
+	//Aqui vai a logica de revisao de Nos abertos
+	var contentChildren = this.searchGraph.getNodeContent(childrenNode);
+	var contentParent = this.searchGraph.getNodeContent(parentNode);
+	if(contentParent.parent.x === childrenNode.x && contentParent.parent.y === childrenNode.y){
+		return;
+	}
+	var atualCustoTotal = contentChildren.estimado + contentChildren.custo;
+	var novoCustoTotal = contentParent.terrain*this.getMoveCusto(childrenNode, parentNode) + 
+		contentParent.custo + this.getEstimatedValue(childrenNode, parentNode);
+	if (novoCustoTotal < atualCustoTotal){
+		this.setVisitedNode(childrenNode, parentNode);
+		
+		for(var i = 0;i < this.openNodes.length;i++){
+			if(this.openNodes[i].x === childrenNode.x && this.openNodes[i].y === childrenNode.y){
+				this.openNodes.splice(i,1);
+			}
+		}
+		this.addOpenNode(childrenNode);
+	}
+};
+aStarGenericSearchPath.prototype.reviewClosedNode = function(childrenNode, parentNode){
+	//Aqui vai a logica de revisao de Nos Fechados
+	var contentChildren = this.searchGraph.getNodeContent(childrenNode);
+	var contentParent = this.searchGraph.getNodeContent(parentNode);
+	if(contentParent.parent.x === childrenNode.x && contentParent.parent.y === childrenNode.y){
+		return;
+	}
+	var atualCustoTotal = contentChildren.estimado + contentChildren.custo;
+	var novoCustoTotal = contentParent.terrain*this.getMoveCusto(childrenNode, parentNode) + 
+		contentParent.custo + this.getEstimatedValue(childrenNode, parentNode);
+	if (novoCustoTotal < atualCustoTotal){
+		this.setVisitedNode(childrenNode, parentNode);
+		this.addOpenNode(childrenNode);
+	}
 };
 
 //UniformCostSearchPath <-aStarGenericSearchPath <- GenericSearchPath
@@ -191,9 +227,6 @@ function UniformCostSearchPath(graph){
 UniformCostSearchPath.prototype = new aStarGenericSearchPath();
 delete UniformCostSearchPath.prototype.openNodes;
 delete UniformCostSearchPath.prototype.searchGraph;
-UniformCostSearchPath.prototype.setEstimatedValue = function (childrenNode, parentNode) {
-	this.searchGraph.getNodeContent(childrenNode).estimado = 0;
-};
 
 
 //aStarDiagonalDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
@@ -203,8 +236,8 @@ function aStarDiagonalDistanceSearchPath(graph){
 aStarDiagonalDistanceSearchPath.prototype = new aStarGenericSearchPath();
 delete aStarDiagonalDistanceSearchPath.prototype.openNodes;
 delete aStarDiagonalDistanceSearchPath.prototype.searchGraph;
-aStarDiagonalDistanceSearchPath.prototype.setEstimatedValue = function (childrenNode, parentNode) {
-	this.searchGraph.getNodeContent(childrenNode).estimado = Math.max(Math.abs(childrenNode.x - this.end.x), Math.abs(childrenNode.y - this.end.y));
+aStarDiagonalDistanceSearchPath.prototype.getEstimatedValue = function (childrenNode, parentNode) {
+	return Math.max(Math.abs(childrenNode.x - this.end.x), Math.abs(childrenNode.y - this.end.y));
 };
 
 //aStarManhattanDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
@@ -214,8 +247,8 @@ function aStarManhattanDistanceSearchPath(graph){
 aStarManhattanDistanceSearchPath.prototype = new aStarGenericSearchPath();
 delete aStarManhattanDistanceSearchPath.prototype.openNodes;
 delete aStarManhattanDistanceSearchPath.prototype.searchGraph;
-aStarManhattanDistanceSearchPath.prototype.setEstimatedValue = function (childrenNode, parentNode) {
-	this.searchGraph.getNodeContent(childrenNode).estimado = Math.abs(childrenNode.x - this.end.x) + Math.abs(childrenNode.y - this.end.y);
+aStarManhattanDistanceSearchPath.prototype.getEstimatedValue = function (childrenNode, parentNode) {
+	return Math.abs(childrenNode.x - this.end.x) + Math.abs(childrenNode.y - this.end.y);
 };
 
 //aStarEuclideanDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
@@ -225,12 +258,12 @@ function aStarEuclideanDistanceSearchPath(graph){
 aStarEuclideanDistanceSearchPath.prototype = new aStarGenericSearchPath();
 delete aStarEuclideanDistanceSearchPath.prototype.openNodes;
 delete aStarEuclideanDistanceSearchPath.prototype.searchGraph;
-aStarEuclideanDistanceSearchPath.prototype.setEstimatedValue = function (childrenNode, parentNode) {
+aStarEuclideanDistanceSearchPath.prototype.getEstimatedValue = function (childrenNode, parentNode) {
 	var deltaX = Math.abs(childrenNode.x - this.end.x);
 	var deltaY = Math.abs(childrenNode.y - this.end.y);
 	var deltaXSquare = Math.pow(deltaX,2);
 	var deltaYSquare = Math.pow(deltaY,2);
-	this.searchGraph.getNodeContent(childrenNode).estimado = Math.sqrt(deltaXSquare + deltaYSquare);
+	return Math.sqrt(deltaXSquare + deltaYSquare);
 };
 
 //bestFirstSearchPath <-aStarGenericSearchPath <- GenericSearchPath
@@ -240,11 +273,11 @@ function bestFirstSearchPath(graph){
 bestFirstSearchPath.prototype = new aStarGenericSearchPath();
 delete bestFirstSearchPath.prototype.openNodes;
 delete bestFirstSearchPath.prototype.searchGraph;
-bestFirstSearchPath.prototype.setEstimatedValue = function (childrenNode, parentNode) {
+bestFirstSearchPath.prototype.getEstimatedValue = function (childrenNode, parentNode) {
 	var deltaX = Math.abs(childrenNode.x - this.end.x);
 	var deltaY = Math.abs(childrenNode.y - this.end.y);
 	var deltaXSquare = Math.pow(deltaX,2);
 	var deltaYSquare = Math.pow(deltaY,2);
-	this.searchGraph.getNodeContent(childrenNode).estimado = pow((deltaXSquare + deltaYSquare),2);
+	return pow((deltaXSquare + deltaYSquare),2);
 };
 
