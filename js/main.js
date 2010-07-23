@@ -255,8 +255,7 @@ function init(){
 	var botao = document.getElementById("clear");
 	botao.onclick = clearPathFinding;
 	graphic = new Graphic(document.getElementById("grid"),mapa[0].length,mapa.length);
-	graph = new Graph(mapa);
-	graphic.render();
+	clearPathFinding();
 	delete init;
 }
 
