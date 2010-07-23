@@ -132,6 +132,13 @@ function getTypeGraph(){
 	}
 	return choices[i].value;
 }
+function getTypeHeuristica(){
+	var choices = document.getElementById("choice").admissible;
+	for(var i = 0; i< choices.length; i++){
+		if(choices[i].checked){ break; }
+	}
+	return choices[i].value;
+}
 function setTypeMap(){
 	var choices = document.getElementById("choice").mapa;
 	for(var i = 0; i< choices.length; i++){
@@ -166,24 +173,53 @@ function runPathFinding(){
 	setTypeMap();
 	graph = new Graph(mapa);
 	var game;
+	var admissible = function (tipo){
+		switch (tipo){
+			case "sim":
+				return true;
+			case "nao":
+			default:
+				return false;	
+		}
+	}(getTypeHeuristica());
 	switch (getChoice()) {
 		case "astar_dd":
-			game = new aStarDiagonalDistanceSearchPath(graph);
+			if(admissible){
+				game = new aStarDiagonalDistanceSearchPath(graph);
+			} else {
+				game = new aStarDiagonalDistanceISearchPath(graph);
+			}
 			break;
 		case "astar_md":
-			game = new aStarManhattanDistanceSearchPath(graph);
+			if(admissible){
+				game = new aStarManhattanDistanceSearchPath(graph);
+			} else {
+				game = new aStarManhattanDistanceISearchPath(graph);
+			}
 			break;
 		case "astar_ed":
-			game = new aStarEuclideanDistanceSearchPath(graph);
+			if(admissible){
+				game = new aStarEuclideanDistanceSearchPath(graph);
+			} else {
+				game = new aStarEuclideanDistanceISearchPath(graph);
+			}
 			break;
 		case "bfs":
 			game = new BreadthFirstSearchPath(graph);
 			break;
 		case "ucs":
-			game = new UniformCostSearchPath(graph);
+			if(admissible){
+				game = new UniformCostSearchPath(graph);
+			} else {
+				game = new UniformCostSearchIPath(graph);
+			}
 			break;
 		case "bestfs":
-			game = new aStarManhattanDistanceSearchPath(graph);
+			if(admissible){
+				game = new bestFirstSearchPath(graph);
+			} else {
+				game = new bestFirstISearchPath(graph);
+			}
 			break;
 		default:
 			game = new aStarSearchPath(graph);

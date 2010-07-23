@@ -278,6 +278,59 @@ bestFirstSearchPath.prototype.getEstimatedValue = function (childrenNode, parent
 	var deltaY = Math.abs(childrenNode.y - this.end.y);
 	var deltaXSquare = Math.pow(deltaX,2);
 	var deltaYSquare = Math.pow(deltaY,2);
-	return pow((deltaXSquare + deltaYSquare),2);
+	return Math.pow((deltaXSquare + deltaYSquare),2);
 };
+
+//heuristica Inadmissivel
+//UniformCostSearchIPath <- UniformCostSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+function UniformCostSearchIPath(graph){
+	UniformCostSearchPath.call(this, graph);
+}
+UniformCostSearchIPath.prototype = new UniformCostSearchPath();
+delete UniformCostSearchIPath.prototype.openNodes;
+delete UniformCostSearchIPath.prototype.searchGraph;
+UniformCostSearchIPath.prototype.reviewOpenNode = function(childrenNode, parentNode){ return; };
+UniformCostSearchIPath.prototype.reviewClosedNode = function(childrenNode, parentNode){ return; };
+
+//aStarDiagonalDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+function aStarDiagonalDistanceISearchPath(graph){
+	aStarDiagonalDistanceSearchPath.call(this, graph);
+}
+aStarDiagonalDistanceISearchPath.prototype = new aStarDiagonalDistanceSearchPath();
+delete aStarDiagonalDistanceISearchPath.prototype.openNodes;
+delete aStarDiagonalDistanceISearchPath.prototype.searchGraph;
+aStarDiagonalDistanceISearchPath.prototype.reviewOpenNode = function(childrenNode, parentNode){ return; };
+aStarDiagonalDistanceISearchPath.prototype.reviewClosedNode = function(childrenNode, parentNode){ return; };
+
+//aStarManhattanDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+function aStarManhattanDistanceISearchPath(graph){
+	aStarManhattanDistanceSearchPath.call(this, graph);
+}
+aStarManhattanDistanceISearchPath.prototype = new aStarManhattanDistanceSearchPath();
+delete aStarManhattanDistanceISearchPath.prototype.openNodes;
+delete aStarManhattanDistanceISearchPath.prototype.searchGraph;
+aStarManhattanDistanceISearchPath.prototype.reviewOpenNode = function(childrenNode, parentNode){ return; };
+aStarManhattanDistanceISearchPath.prototype.reviewClosedNode = function(childrenNode, parentNode){ return; };
+
+
+//aStarEuclideanDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+function aStarEuclideanDistanceISearchPath(graph){
+	aStarEuclideanDistanceSearchPath.call(this, graph);
+}
+aStarEuclideanDistanceISearchPath.prototype = new aStarEuclideanDistanceSearchPath();
+delete aStarEuclideanDistanceISearchPath.prototype.openNodes;
+delete aStarEuclideanDistanceISearchPath.prototype.searchGraph;
+aStarEuclideanDistanceISearchPath.prototype.reviewOpenNode = function(childrenNode, parentNode){ return; };
+aStarEuclideanDistanceISearchPath.prototype.reviewClosedNode = function(childrenNode, parentNode){ return; };
+
+//bestFirstSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+function bestFirstISearchPath(graph){
+	bestFirstSearchPath.call(this, graph);
+}
+bestFirstISearchPath.prototype = new bestFirstSearchPath();
+delete bestFirstISearchPath.prototype.openNodes;
+delete bestFirstISearchPath.prototype.searchGraph;
+bestFirstISearchPath.prototype.reviewOpenNode = function(childrenNode, parentNode){ return; };
+bestFirstISearchPath.prototype.reviewClosedNode = function(childrenNode, parentNode){ return; };
+
 

@@ -37,5 +37,6 @@ footer {
 	font-family: "Courier New", monospace;
 }
 .options {
+	border: 1px gray solid;
 	background-color: #DDDDDD;
 }
