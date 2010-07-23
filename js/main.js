@@ -1,5 +1,14 @@
-var graph;
-var graphic;
+/*
+ * Demostrador de Algoritmos de Pathfinding:
+ *	Autor & Bolsista: Emiliano Carlos de Moraes Firmino
+ *	Orientador: Jucimar Maia Júnior
+ *	Projeto: Desenvolvimento de Interface Web Interativa em HTML5 e CSS3 para jogos de computador online multiusuários massivos.
+ *	Programa de Apoio a Iniciação Científica - PAIC
+ *
+ * */
+
+
+var graph, graphic, eightEdges = true;
 var dirtmapa = [
 [-1,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ],
 [-1, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,-1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,-1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,-1 ],
@@ -70,7 +79,6 @@ var cleanmapa = [
 [-1, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,-1 ],
 [-1,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ]
 ];
-var eightEdges = true;
 
 //Default
 var mapa = cleanmapa;
@@ -142,7 +150,6 @@ function runPathFinding(){
 			game = new aStarSearchPath(graph);
 	}
 	switch(getTypeGraph()){
-		
 		case "4":
 			eightEdges = false;
 			break;
@@ -150,11 +157,10 @@ function runPathFinding(){
 		default :
 			eightEdges = true;
 	}
-	
 	game.searchPath(origem, destino);
 	graph.grid[origem.y][origem.x].text = "";
 	graphic.render();
-	var output = document.getElementById("custo");
+	var output = document.getElementById("estatistica");
 	var node, tiles = 0, tilesClosed = 0, tilesVisited = 0, tilesOpen = 0;
 	var i, j;
 	for (j = 1; j < graph.grid.length - 1; j++){
@@ -172,15 +178,18 @@ function runPathFinding(){
 					}
 				}
 			}
-		
 		}
 	}
 	output.textContent = "Estatística:\n";
-	output.textContent += "Total de Nós: " + tiles + "\n";
-	output.textContent += "Nós Visitados: " + tilesVisited + "\n";
-	output.textContent += "Nós não visitados: " + (tiles - tilesVisited) + "\n";
-	output.textContent += "Nós Abertos: " + tilesOpen + "\n";
-	output.textContent += "Nós Fechados: " + tilesClosed + "\n";
+	output.textContent += "Total de Nós: \t" + tiles +"\n";
+	output.textContent += "Nós Visitados: \t" + tilesVisited +
+		" \t(" + ((tilesVisited / tiles)*100).toFixed(2) + "%)" + "\n";
+	output.textContent += "Não visitados: \t" + (tiles - tilesVisited) +
+		" \t(" + (((tiles -tilesVisited) / tiles)*100).toFixed(2) + "%)" + "\n";
+	output.textContent += "Nós Abertos: \t" + tilesOpen +
+		" \t(" + ((tilesOpen / tiles)*100).toFixed(2) + "%)" + "\n";
+	output.textContent += "Nós Fechados: \t" + tilesClosed +
+		" \t(" + ((tilesClosed / tiles)*100).toFixed(2) + "%)" + "\n";
 	var total = (graph.grid[destino.y][destino.x].custo);
 	if(total <= 0){
 		total = "???";
@@ -188,13 +197,17 @@ function runPathFinding(){
 	else{
 		total = total.toFixed(3);
 	}
-	output.textContent += "Custo Total: " + total;
+	output.textContent += "Custo Total: \t" + total;
+	output.style.border = "1px dashed black";
+	output.style.padding = "10px";
 }
 function clearPathFinding(){
 	setTypeMap();
 	graph = new Graph(mapa);
 	graphic.render();
-	var output = document.getElementById("custo");
+	var output = document.getElementById("estatistica");
+	output.style.border = "";
+	output.style.padding = "0px";
 	output.textContent = "";
 }
 function init(){

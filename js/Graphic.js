@@ -29,7 +29,11 @@ Graphic.prototype.drawGridLines = function () {
 		this.context.moveTo(line * this.tileX - 0.5, 0);
 		this.context.lineTo(line * this.tileX - 0.5, this.canvas.height);
 	}
+	this.context.save();
+	this.context.strokeStyle = "#555";
 	this.context.stroke();
+	this.context.beginPath()
+	this.context.restore();
 };
 Graphic.prototype.drawText = function (x, y, text){
 	this.context.save();
