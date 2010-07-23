@@ -30,7 +30,7 @@ Graph.prototype.createNode = function(_custo, _blocked, _cor, _text) {
 		terrain : _custo,
 		custo : 0,
 		estimado : 0,
-		blocked : _blocked, 
+		blocked : _blocked,
 		visited : false,
 		parent: null,
 		closed : false,

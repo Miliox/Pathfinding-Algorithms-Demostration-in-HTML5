@@ -19,12 +19,19 @@ GenericSearchPath.prototype.searchPath = function (start, end){
 		adjNodes = this.getAdjacentNodes(node);
 		for(i = 0; i < adjNodes.length; i++){
 			nodeContent = this.searchGraph.getNodeContent(adjNodes[i]);
-			if (
-				!nodeContent.visited &&
-				!nodeContent.blocked
-			){
-				this.setVisitedNode(adjNodes[i], node);
-				this.addOpenNode(adjNodes[i]);
+			if (!nodeContent.blocked){
+				if(!nodeContent.visited){
+					this.setVisitedNode(adjNodes[i], node);
+					this.addOpenNode(adjNodes[i]);
+				}
+				else if(nodeContent.visited){
+					if(nodeContent.closed) {
+						this.reviewClosedNode(adjNodes[i],node);
+					}
+					else {
+						this.reviewOpenNode(adjNodes[i], node);
+					}
+				}
 			}
 		}
 	}
@@ -44,6 +51,12 @@ GenericSearchPath.prototype.setVisitedNode = function (childrenNode, parentNode)
 	content.visited = true;
 	content.parent = parentNode;
 	content.text = this.getArrowSymbol(childrenNode, parentNode);
+};
+GenericSearchPath.prototype.reviewOpenNode = function(childrenNode, parentNode){
+	//Aqui vai a logica de revisao de Nos abertos
+};
+GenericSearchPath.prototype.reviewClosedNode = function(childrenNode, parentNode){
+	//Aqui vai a logica de revisao de Nos Fechados
 };
 GenericSearchPath.prototype.openIsNotEmpty = function () {
 	if (this.openNodes.length === 0) {
@@ -106,10 +119,11 @@ GenericSearchPath.prototype.getAdjacentNodes = function (node, parent) {
 	SW = {x: node.x - 1, y: node.y + 1};
 
 	if(eightEdges){
-		return [N, NE, E, SE, S, SW, W, NW]
+		//return [N, NE, E, SE, S, SW, W, NW];
+		return [N, E, S, W, NE, SE, SW, NW];
 	}
 	else{
-		return [N, E, S, W]	
+		return [N, E, S, W];
 	}
 };
 GenericSearchPath.prototype.backtrackingPath = function (childrenNode) {

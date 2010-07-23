@@ -8,6 +8,9 @@ aside {
 	font-size: 12pt;
 	font-family: Verdana, sans-serif;
 }
+body {
+	background-color: #FFFFFF;
+}
 pre {
 	color: #000000;
 	font-style: normal;
@@ -25,6 +28,7 @@ canvas {
 	width: 640px;
 	left: 50%;
 	margin-left: -320px;
+	background-color: #FFFFFF;
 }
 footer {
 	font-style: normal;
