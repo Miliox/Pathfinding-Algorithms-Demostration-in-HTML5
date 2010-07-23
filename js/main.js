@@ -43,7 +43,6 @@ var dirtmapa = [
 	[-1, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,-1 , 0 , 0 , 0 , 0 , 0 , 0 ,-1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,-1 , 0 , 0 ,-1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,-1 ],
 	[-1,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ]
 ];
-
 var cleanmapa = [
 	[-1,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ],
 	[-1, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,-1 ],
@@ -118,59 +117,70 @@ var mapa = cleanmapa;
 var origem = {x : 20, y: 16};
 var destino = {x : 1, y: 1};
 
-function getChoice(){
-	var choices = document.getElementById("choice").algorithm;
-	for(var i = 0; i< choices.length; i++){
-		if(choices[i].checked){ break; }
-	}
-	return choices[i].value;
-}
-function getTypeGraph(){
-	var choices = document.getElementById("choice").grid_connected;
-	for(var i = 0; i< choices.length; i++){
-		if(choices[i].checked){ break; }
-	}
-	return choices[i].value;
-}
-function getTypeHeuristica(){
-	var choices = document.getElementById("choice").admissible;
-	for(var i = 0; i< choices.length; i++){
-		if(choices[i].checked){ break; }
-	}
-	return choices[i].value;
-}
-function setTypeMap(){
-	var choices = document.getElementById("choice").mapa;
-	for(var i = 0; i< choices.length; i++){
-		if(choices[i].checked){ break; }
-	}
-	var name_map =  choices[i].value;
-	switch(name_map){
-		case "maze":
-			mapa = dirtmapa;
-			origem = {x: 29, y: 19};
-			destino = {x: 1, y:30};
-			break;
-		case "blockmap1":
-			mapa = cmapa;
-			origem = {x: 3, y: 15};
-			destino = {x: 21, y: 15};
-			break;
-		case "blockmap2":
-			mapa = cmapa;
-			destino = {x: 3, y: 28};
-			origem = {x: 21, y: 15};
-			break;
-		case "open":
-		default :
-			mapa = cleanmapa;
-			origem = {x : 20, y: 16};
-			destino = {x : 1, y: 1};
-	}
+var application = { 
+	getOption : function (name) {
+		var choices = document.getElementById("choice")[name];
+		for(var i = 0; i< choices.length; i++){
+			if(choices[i].checked){ break; }
+		}
+		return choices[i].value;
+	},
+	setTypeMap : function () {
+		var name_map = this.getOption("mapa");
+		switch(name_map){
+			case "maze":
+				mapa = dirtmapa;
+				origem = {x: 29, y: 19};
+				destino = {x: 1, y:30};
+				break;
+			case "blockmap1":
+				mapa = cmapa;
+				origem = {x: 3, y: 15};
+				destino = {x: 21, y: 15};
+				break;
+			case "blockmap2":
+				mapa = cmapa;
+				destino = {x: 3, y: 28};
+				origem = {x: 21, y: 15};
+				break;
+			case "open":
+			default :
+				mapa = cleanmapa;
+				origem = {x : 20, y: 16};
+				destino = {x : 1, y: 1};
+		}
+	},
+	generateStatistic : function(){
+		var statistic = {};		
+		statistic.tiles = 0;
+		statistic.tilesClosed = 0;
+		statistic.tilesVisited = 0;
+		statistic.tilesOpen = 0;
+		var node;
+		var i, j;
+		for (j = 1; j < graph.grid.length - 1; j++){
+			for (i = 1; i < graph.grid[j].length - 1; i++){
+				node = graph.grid[j][i];
+				if(node.blocked === false){
+					statistic.tiles++;
+					if(node.visited === true) {
+						statistic.tilesVisited++;
+						if(node.closed === false){
+							statistic.tilesOpen++;
+						}
+						else{
+							statistic.tilesClosed++;
+						}
+					}
+				}
+			}
+		}
+		return statistic;
+	},
 }
 
 function runPathFinding(){
-	setTypeMap();
+	application.setTypeMap();
 	graph = new Graph(mapa);
 	var game;
 	var admissible = function (tipo){
@@ -181,8 +191,8 @@ function runPathFinding(){
 			default:
 				return false;	
 		}
-	}(getTypeHeuristica());
-	switch (getChoice()) {
+	}(application.getOption("admissible"));
+	switch (application.getOption("algorithm")) {
 		case "astar_dd":
 			if(admissible){
 				game = new aStarDiagonalDistanceSearchPath(graph);
@@ -224,7 +234,7 @@ function runPathFinding(){
 		default:
 			game = new aStarSearchPath(graph);
 	}
-	switch(getTypeGraph()){
+	switch(application.getOption("grid_connected")){
 		case "4":
 			eightEdges = false;
 			break;
@@ -235,55 +245,44 @@ function runPathFinding(){
 	game.searchPath(origem, destino);
 	graph.grid[origem.y][origem.x].text = "";
 	graphic.render();
-	var output = document.getElementById("estatistica");
-	var node, tiles = 0, tilesClosed = 0, tilesVisited = 0, tilesOpen = 0;
-	var i, j;
-	for (j = 1; j < graph.grid.length - 1; j++){
-		for (i = 1; i < graph.grid[j].length - 1; i++){
-			node = graph.grid[j][i];
-			if(node.blocked === false){
-				tiles++;
-				if(node.visited === true){
-					tilesVisited++;
-					if(node.closed === false){
-						tilesOpen++;
-					}
-					else{
-						tilesClosed++;
-					}
-				}
-			}
-		}
-	}
-	output.textContent = "Estatística:\n";
-	output.textContent += "Total de Nós: \t" + tiles +"\n";
-	output.textContent += "Nós Visitados: \t" + tilesVisited +
-		" \t(" + ((tilesVisited / tiles)*100).toFixed(2) + "%)" + "\n";
-	output.textContent += "Não visitados: \t" + (tiles - tilesVisited) +
-		" \t(" + (((tiles -tilesVisited) / tiles)*100).toFixed(2) + "%)" + "\n";
-	output.textContent += "Nós Abertos: \t" + tilesOpen +
-		" \t(" + ((tilesOpen / tiles)*100).toFixed(2) + "%)" + "\n";
-	output.textContent += "Nós Fechados: \t" + tilesClosed +
-		" \t(" + ((tilesClosed / tiles)*100).toFixed(2) + "%)" + "\n";
+	var dados = application.generateStatistic();
+	var visited = ((dados.tilesVisited / dados.tiles)*100).toFixed(2);
+	var notVisited = (((dados.tiles - dados.tilesVisited) / dados.tiles)*100).toFixed(2);
+	var opened = ((dados.tilesOpen / dados.tiles)*100).toFixed(2);
+	var closed = ((dados.tilesClosed / dados.tiles)*100).toFixed(2)
 	var total = (graph.grid[destino.y][destino.x].custo);
-	if(total <= 0){
-		total = "???";
-	}
-	else{
-		total = total.toFixed(3);
-	}
-	output.textContent += "Custo Total: \t" + total;
-	output.style.border = "1px dashed black";
-	output.style.padding = "10px";
+
+	total = function(n){
+		if(n <= 0){ 
+			return "???"; 
+		}
+		return n.toFixed(3);
+	}(total);
+	
+	var textBox = document.getElementById("estatistica");
+	textBox.textContent  = "Estatística:\n";
+	textBox.textContent += "Total de Nós: \t" + dados.tiles +"\n";
+	textBox.textContent += "Nós Visitados: \t" + dados.tilesVisited; 
+	textBox.textContent += " \t(" +  visited + "%)" + "\n";
+	textBox.textContent += "Não visitados: \t" + (dados.tiles - dados.tilesVisited);
+	textBox.textContent += " \t(" + notVisited + "%)" + "\n";
+	textBox.textContent += "Nós Abertos: \t" + dados.tilesOpen;
+	textBox.textContent += " \t(" + opened + "%)" + "\n";
+	textBox.textContent += "Nós Fechados: \t" + dados.tilesClosed;
+	textBox.textContent += " \t(" + closed + "%)" + "\n";
+	textBox.textContent += "Custo Total: \t" + total;
+
+	textBox.style.border = "1px dashed black";
+	textBox.style.padding = "10px";
 }
 function clearPathFinding(){
-	setTypeMap();
+	application.setTypeMap();
 	graph = new Graph(mapa);
 	graphic.render();
-	var output = document.getElementById("estatistica");
-	output.style.border = "";
-	output.style.padding = "0px";
-	output.textContent = "";
+	var textBox = document.getElementById("estatistica");
+	textBox.style.border = "";
+	textBox.style.padding = "0px";
+	textBox.textContent = "";
 }
 function init(){
 	var botao = document.getElementById("run");
