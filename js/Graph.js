@@ -27,15 +27,15 @@ function Graph(gameGrid){
 }
 Graph.prototype.createNode = function(_terrain, _blocked, _cor, _text) {
 	return {
-		terrain : _terrain,
-		custo : 0,
-		estimado : 0,
 		blocked : _blocked,
-		visited : false,
-		parent: null,
 		closed : false,
 		cor : _cor,
-		text : _text
+		custo : 0,
+		estimado : 0,
+		parent: null,
+		terrain : _terrain,
+		text : _text,
+		visited : false
 	};
 };
 Graph.prototype.getNodeContent = function (pos) {

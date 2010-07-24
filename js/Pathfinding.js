@@ -25,15 +25,18 @@ GenericSearchPath.prototype.searchPath = function (start, end){
 					this.addOpenNode(adjNodes[i]);
 				}
 				else if(nodeContent.visited){
+					/*
 					if(nodeContent.closed) {
 						this.reviewClosedNode(adjNodes[i],node);
 					}
 					else {
 						this.reviewOpenNode(adjNodes[i], node);
 					}
-				}//if vis
-			}//if bk
-		}//for
+					*/
+					this.reviewClosedNode(adjNodes[i], node);
+				}
+			}
+		}
 	}
 	return false;
 };

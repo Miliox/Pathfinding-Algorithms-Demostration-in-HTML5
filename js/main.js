@@ -22,10 +22,15 @@ var pathfinding = {
 	setMap : function () {
 		var name_map = this.getOption("mapa");
 		switch(name_map){
-			case "maze":
+			case "maze1":
 				mapa = dirtmapa;
 				origem = {x: 29, y: 19};
 				destino = {x: 1, y:30};
+				break;
+			case "maze2":
+				mapa = dirtmapa2;
+				origem = {x: 40, y: 1};
+				destino = {x: 1, y: 27};
 				break;
 			case "blockmap1":
 				mapa = cmapa;
@@ -182,10 +187,14 @@ var pathfinding = {
 		botao = document.getElementById("clear");
 		botao.onclick = function (){ pathfinding.clear(); };
 		pathfinding.setMap();
-		graphic = new Graphic(document.getElementById("grid"),mapa[0].length,mapa.length);
-		pathfinding.clear();
-		delete pathfinding.init;
+		try {
+			graphic = new Graphic(document.getElementById("grid"),mapa[0].length,mapa.length);
+			pathfinding.clear();
+			delete pathfinding.init;
+		}
+		catch (e) {
+			window.setTimeout(pathfinding.init,500);
+		}
 	}
 };
-
 window.onload = pathfinding.init;
