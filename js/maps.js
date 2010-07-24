@@ -60,7 +60,7 @@ var cmapa = function (maxcol, maxline) {
 				(line === 0 || line === (maxline-1)) ||
 				(col === 0 || col === (maxcol-1))
 			){
-				map[line][col] = -1; 
+				map[line][col] = -1;
 			} else if (
 				(line > 3 && line < 28) && (col === 6)
 			) {
