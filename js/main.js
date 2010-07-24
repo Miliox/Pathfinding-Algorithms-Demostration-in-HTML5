@@ -56,10 +56,10 @@ var pathfinding = {
 		statistic.tilesVisited = 0;
 		statistic.tilesOpen = 0;
 		var node;
-		var i, j;
-		for (j = 1; j < graph.grid.length - 1; j++){
-			for (i = 1; i < graph.grid[j].length - 1; i++){
-				node = graph.grid[j][i];
+		var line, col;
+		for (line = 1; line < graph.grid.length - 1; line++){
+			for (col = 1; col < graph.grid[line].length - 1; col++){
+				node = graph.grid[line][col];
 				if(node.blocked === false){
 					statistic.tiles++;
 					if(node.visited === true) {
@@ -79,7 +79,7 @@ var pathfinding = {
 	clear : function (){
 		this.setMap();
 		graph = new Graph(mapa);
-		graphic.render();
+		graphic.render(graph, origem, destino);
 		var textBox = document.getElementById("estatistica");
 		textBox.style.border = "";
 		textBox.style.padding = "0px";
@@ -152,7 +152,7 @@ var pathfinding = {
 		game.searchPath(origem, destino);
 		var timeEnd = (new Date()).getTime();
 		graph.grid[origem.y][origem.x].text = "";
-		graphic.render();
+		graphic.render(graph, origem, destino);
 		var dados = this.generateStatistic();
 		var visited = ((dados.tilesVisited / dados.tiles)*100).toFixed(2);
 		var notVisited = (((dados.tiles - dados.tilesVisited) / dados.tiles)*100).toFixed(2);

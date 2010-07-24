@@ -1,3 +1,12 @@
+/*
+ * Demostrador de Algoritmos de Pathfinding:
+ *	Autor & Bolsista: Emiliano Carlos de Moraes Firmino
+ *	Orientador: Jucimar Maia Júnior
+ *	Projeto: Desenvolvimento de Interface Web Interativa em HTML5 e CSS3 para jogos de computador online multiusuários massivos.
+ *	Programa de Apoio a Iniciação Científica - PAIC
+ *
+ * */
+
 function Graph(gameGrid){
 	this.grid = new Array(gameGrid.length);
 	var node;

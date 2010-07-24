@@ -1,3 +1,12 @@
+/*
+ * Demostrador de Algoritmos de Pathfinding:
+ *	Autor & Bolsista: Emiliano Carlos de Moraes Firmino
+ *	Orientador: Jucimar Maia Júnior
+ *	Projeto: Desenvolvimento de Interface Web Interativa em HTML5 e CSS3 para jogos de computador online multiusuários massivos.
+ *	Programa de Apoio a Iniciação Científica - PAIC
+ *
+ * */
+
 function createMapaFromImage (maze) {
 	//manipulo o canvas para gerar o ImageData
 	var mazeCv = document.createElement('canvas');
@@ -61,16 +70,15 @@ function createMapaFromImage (maze) {
 var cleanmapa = function () {
 	var maxline = 32;
 	var maxcol = 42;
-
+	var line, col;
 	var map = new Array(maxline);	
 	for(line = 0; line < maxline; line++){
 		map[line] = new Array(maxcol);
 		for(col = 0; col < maxcol; col++){
-			//Defino o Tile
 			if (
 				(line === 0 || line === (maxline-1) ) ||
 				(col === 0 || col === (maxcol-1))
-			) {
+			){
 				map[line][col] = -1;
 			} else {
 				map[line][col] = 0;
@@ -80,7 +88,7 @@ var cleanmapa = function () {
 	return map;
 }();
 
-var dirtmapa, cmapa, dirmapa2;
+var dirtmapa, cmapa, dirtmapa2;
 function loadMaps() {
 	var maze1 = new Image();
 	maze1.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAgCAMAAABThhoPAAAABlBMVEUAAAD///+l2Z/dAAAAu0lEQVQ4y5WUCw6AIAxDu/tf2gS1tvsoEkMQHqMrC8CPFqWhHQ8oHF3U3dkpKDNBdBIA9oKacHCWv4oyzPRtoJRoAvRQDRBQNC8zXriv/enx5LR2uZ0JVSNht2UqdfOKOaKy5xxALjZZw7SugkBOq1rBgvhArUitsmpCk69dTurlO2oLLIYUaUKrPtN9eYt8encRHVpVJhQTig4txYVbYUVrycYnGg3qZumFPy+HiUN6H/KD1b5ZG+h2OwCh/QM8itUojAAAAABJRU5ErkJggg==';
@@ -93,6 +101,5 @@ function loadMaps() {
 	var maze3 = new Image();
 	maze3.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAgCAIAAADrOn1qAAAABlBMVEUAAAD///+l2Z/dAAABVklEQVRIx8VWSQ7EMAgDif9/OXPIKGVYTaRqckoT2hpsFqK/Liaitdb3gfnss5P6dmTPzM/dvtDX2Qmy9yBCe/Gm+3FD09/SJwf4Wkufh985NtrsOayR+qUxZb6CluJ/abzcMAtA2qFaaAZB4H3GIqKDOgYhRMmcyBj1fGsB65j5WIZhrtCN9D+NivW+8LjVf6ibWss/3rfCKdSA1IyGe3Nn+EPAgTncc49kNpL3bS0Rz2uhL6QcZb0gDDDhKh3Fqa0QeyMtPWBJzpDV2URgl0Mq2qhrPN5PFWvIy/IltAcziEY6AFtOwz3CtLEpavuNl3jXwjO+r3rhwNO+7GlGpr+q6k31PJ0Em6o3IsL3N/96WO+ajjfN9evuIFlHr3sgwkKW5ZZ7fLa5y/JG+WeWbWd7D/wCRKx8fGoDVY3EQBA7T9IUQRgDZpb6N9msEVoiY8gU9LvrA+sn6Tq9RyFwAAAAAElFTkSuQmCC';	
 	maze3.onload = function(){ dirtmapa2 = createMapaFromImage(maze3); };
-};
-
+}
 loadMaps();
