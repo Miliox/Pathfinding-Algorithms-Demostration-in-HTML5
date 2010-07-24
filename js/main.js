@@ -8,15 +8,10 @@
  * */
 
 //Variaveis Globais
-var graph;
-var graphic;
-var eightEdges = true;
-var mapa;
-var origem;
-var destino;
+var graph, graphic, eightEdges = true, mapa, origem, destino;
 
 //Aplicação
-var application = {
+var pathfinding = {
 	getOption : function (name) {
 		var choices = document.getElementById("choice")[name];
 		for(var i = 0; i< choices.length; i++){
@@ -24,7 +19,7 @@ var application = {
 		}
 		return choices[i].value;
 	},
-	setTypeMap : function () {
+	setMap : function () {
 		var name_map = this.getOption("mapa");
 		switch(name_map){
 			case "maze":
@@ -76,8 +71,8 @@ var application = {
 		}
 		return statistic;
 	},
-	clearPathFinding : function (){
-		this.setTypeMap();
+	clear : function (){
+		this.setMap();
 		graph = new Graph(mapa);
 		graphic.render();
 		var textBox = document.getElementById("estatistica");
@@ -85,8 +80,8 @@ var application = {
 		textBox.style.padding = "0px";
 		textBox.textContent = "";
 	},
-	runPathFinding : function (){
-		this.setTypeMap();
+	run : function (){
+		this.setMap();
 		graph = new Graph(mapa);
 		var game;
 		var admissible = function (tipo){
@@ -183,14 +178,14 @@ var application = {
 	},
 	init : function () {
 		var botao = document.getElementById("run");
-		botao.onclick = function (){ application.runPathFinding(); };
+		botao.onclick = function (){ pathfinding.run(); };
 		botao = document.getElementById("clear");
-		botao.onclick = function (){ application.clearPathFinding(); };
-		application.setTypeMap();
+		botao.onclick = function (){ pathfinding.clear(); };
+		pathfinding.setMap();
 		graphic = new Graphic(document.getElementById("grid"),mapa[0].length,mapa.length);
-		application.clearPathFinding();
-		delete application.init;
+		pathfinding.clear();
+		delete pathfinding.init;
 	}
 };
 
-window.onload = application.init;
+window.onload = pathfinding.init;
