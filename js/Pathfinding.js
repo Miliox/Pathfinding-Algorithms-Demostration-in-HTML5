@@ -31,9 +31,9 @@ GenericSearchPath.prototype.searchPath = function (start, end){
 					else {
 						this.reviewOpenNode(adjNodes[i], node);
 					}
-				}
-			}
-		}
+				}//if vis
+			}//if bk
+		}//for
 	}
 	return false;
 };
@@ -59,83 +59,51 @@ GenericSearchPath.prototype.reviewClosedNode = function(childrenNode, parentNode
 	//Aqui vai a logica de revisao de Nos Fechados
 };
 GenericSearchPath.prototype.openIsNotEmpty = function () {
-	if (this.openNodes.length === 0) {
-		return false;
-	}
+	if (this.openNodes.length === 0) { return false; }
 	return true;
 };
 GenericSearchPath.prototype.getArrowSymbol = function (childrenNode, parentNode) {
 	var deltaX = childrenNode.x - parentNode.x;
 	var deltaY = childrenNode.y - parentNode.y;
 
-	if (deltaX == 0 && deltaY < 0){
-		return "\u2191";
-	}
-	else if (deltaX > 0 && deltaY < 0){
-		return "\u2197";
-	}
-	else if (deltaX > 0 && deltaY == 0){
-		return "\u2192";
-	}
-	else if (deltaX > 0 && deltaY > 0){
-		return "\u2198";
-	}
-	else if (deltaX == 0 && deltaY > 0){
-		return "\u2193";
-	}
-	else if (deltaX < 0 && deltaY > 0){
-		return "\u2199";
-	}
-	else if (deltaX < 0 && deltaY == 0){
-		return "\u2190";
-	}
-	else if (deltaX < 0 && deltaY < 0){
-		return "\u2196";
-	}
-	else {
-		return "";
-	}
+	if 	(deltaX == 0 && deltaY <  0){ return "\u2191"; }
+	else if (deltaX >  0 && deltaY <  0){ return "\u2197"; }
+	else if (deltaX >  0 && deltaY == 0){ return "\u2192"; }
+	else if (deltaX >  0 && deltaY >  0){ return "\u2198"; }
+	else if (deltaX == 0 && deltaY >  0){ return "\u2193"; }
+	else if (deltaX <  0 && deltaY >  0){ return "\u2199"; }
+	else if (deltaX <  0 && deltaY == 0){ return "\u2190"; }
+	else if (deltaX <  0 && deltaY <  0){ return "\u2196"; }
+	else { return ""; }
 };
 GenericSearchPath.prototype.getMoveCusto = function (childrenNode, parentNode) {
 	var deltaX = childrenNode.x - parentNode.x;
 	var deltaY = childrenNode.y - parentNode.y;
-
-	if(deltaX == 0 || deltaY == 0){
-		return 1;
-	}
+	if(deltaX == 0 || deltaY == 0){ return 1; }
 	return 1.4142;
 };
 GenericSearchPath.prototype.getAdjacentNodes = function (node, parent) {
 	var N, NE, NW, W, E, S, SW, SE;
-	N = {x: node.x + 0, y: node.y - 1};
+	N  = {x: node.x + 0, y: node.y - 1};
 	NE = {x: node.x + 1, y: node.y - 1};
 	NW = {x: node.x - 1, y: node.y - 1};
-
-	W = {x: node.x - 1, y: node.y + 0};
-	E = {x: node.x + 1, y: node.y + 0};
-
-	S = {x: node.x + 0, y: node.y + 1};
+	W  = {x: node.x - 1, y: node.y + 0};
+	E  = {x: node.x + 1, y: node.y + 0};
+	S  = {x: node.x + 0, y: node.y + 1};
 	SE = {x: node.x + 1, y: node.y + 1};
 	SW = {x: node.x - 1, y: node.y + 1};
-
-	if(eightEdges){
-		//return [N, NE, E, SE, S, SW, W, NW];
-		return [N, E, S, W, NE, SE, SW, NW];
-	}
-	else{
-		return [N, E, S, W];
-	}
+	if(eightEdges){ return [N, E, S, W, NE, SE, SW, NW]; }
+	else{ return [N, E, S, W]; }
 };
 GenericSearchPath.prototype.backtrackingPath = function (childrenNode) {
 	var parentNode;
 	var oldNode;
-	var content;
+	var nodeContent;
 	do {
 		parentNode = this.searchGraph.getNodeContent(childrenNode).parent;
-		oldNode = childrenNode;		
+		oldNode = childrenNode;
 		childrenNode = parentNode;
-		content = this.searchGraph.getNodeContent(parentNode);
-		content.cor = "yellow";
+		this.searchGraph.getNodeContent(parentNode).cor = "yellow";
 	} while(oldNode.x !== childrenNode.x || oldNode.y !== childrenNode.y);
 };
 //BFS <- GenericSearchPath
@@ -195,12 +163,13 @@ aStarGenericSearchPath.prototype.reviewOpenNode = function(childrenNode, parentN
 		contentParent.custo + this.getEstimatedValue(childrenNode, parentNode);
 	if (novoCustoTotal < atualCustoTotal){
 		this.setVisitedNode(childrenNode, parentNode);
-		
+		/*
 		for(var i = 0;i < this.openNodes.length;i++){
 			if(this.openNodes[i].x === childrenNode.x && this.openNodes[i].y === childrenNode.y){
 				this.openNodes.splice(i,1);
 			}
 		}
+		*/
 		this.addOpenNode(childrenNode);
 	}
 };
@@ -208,7 +177,10 @@ aStarGenericSearchPath.prototype.reviewClosedNode = function(childrenNode, paren
 	//Aqui vai a logica de revisao de Nos Fechados
 	var contentChildren = this.searchGraph.getNodeContent(childrenNode);
 	var contentParent = this.searchGraph.getNodeContent(parentNode);
-	if(contentParent.parent.x === childrenNode.x && contentParent.parent.y === childrenNode.y){
+	if(
+		contentParent.parent.x === childrenNode.x &&
+		contentParent.parent.y === childrenNode.y
+	){
 		return;
 	}
 	var atualCustoTotal = contentChildren.estimado + contentChildren.custo;
@@ -227,8 +199,6 @@ function UniformCostSearchPath(graph){
 UniformCostSearchPath.prototype = new aStarGenericSearchPath();
 delete UniformCostSearchPath.prototype.openNodes;
 delete UniformCostSearchPath.prototype.searchGraph;
-
-
 //aStarDiagonalDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
 function aStarDiagonalDistanceSearchPath(graph){
 	aStarGenericSearchPath.call(this, graph);
@@ -239,7 +209,6 @@ delete aStarDiagonalDistanceSearchPath.prototype.searchGraph;
 aStarDiagonalDistanceSearchPath.prototype.getEstimatedValue = function (childrenNode, parentNode) {
 	return Math.max(Math.abs(childrenNode.x - this.end.x), Math.abs(childrenNode.y - this.end.y));
 };
-
 //aStarManhattanDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
 function aStarManhattanDistanceSearchPath(graph){
 	aStarGenericSearchPath.call(this, graph);
@@ -250,7 +219,6 @@ delete aStarManhattanDistanceSearchPath.prototype.searchGraph;
 aStarManhattanDistanceSearchPath.prototype.getEstimatedValue = function (childrenNode, parentNode) {
 	return Math.abs(childrenNode.x - this.end.x) + Math.abs(childrenNode.y - this.end.y);
 };
-
 //aStarEuclideanDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
 function aStarEuclideanDistanceSearchPath(graph){
 	aStarGenericSearchPath.call(this, graph);
@@ -265,7 +233,6 @@ aStarEuclideanDistanceSearchPath.prototype.getEstimatedValue = function (childre
 	var deltaYSquare = Math.pow(deltaY,2);
 	return Math.sqrt(deltaXSquare + deltaYSquare);
 };
-
 //bestFirstSearchPath <-aStarGenericSearchPath <- GenericSearchPath
 function bestFirstSearchPath(graph){
 	aStarGenericSearchPath.call(this, graph);
@@ -280,7 +247,6 @@ bestFirstSearchPath.prototype.getEstimatedValue = function (childrenNode, parent
 	var deltaYSquare = Math.pow(deltaY,2);
 	return Math.pow((deltaXSquare + deltaYSquare),2);
 };
-
 //heuristica Inadmissivel
 //UniformCostSearchIPath <- UniformCostSearchPath <-aStarGenericSearchPath <- GenericSearchPath
 function UniformCostSearchIPath(graph){
@@ -291,8 +257,7 @@ delete UniformCostSearchIPath.prototype.openNodes;
 delete UniformCostSearchIPath.prototype.searchGraph;
 UniformCostSearchIPath.prototype.reviewOpenNode = function(childrenNode, parentNode){ return; };
 UniformCostSearchIPath.prototype.reviewClosedNode = function(childrenNode, parentNode){ return; };
-
-//aStarDiagonalDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+//aStarDiagonalDistanceSearchIPath <- aStarDiagonalDistanceSearchPath <- aStarGenericSearchPath <- GenericSearchPath
 function aStarDiagonalDistanceISearchPath(graph){
 	aStarDiagonalDistanceSearchPath.call(this, graph);
 }
@@ -301,8 +266,7 @@ delete aStarDiagonalDistanceISearchPath.prototype.openNodes;
 delete aStarDiagonalDistanceISearchPath.prototype.searchGraph;
 aStarDiagonalDistanceISearchPath.prototype.reviewOpenNode = function(childrenNode, parentNode){ return; };
 aStarDiagonalDistanceISearchPath.prototype.reviewClosedNode = function(childrenNode, parentNode){ return; };
-
-//aStarManhattanDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+//aStarManhattanDistanceISearchPath <- aStarManhattanDistanceSearchPath <- aStarGenericSearchPath <- GenericSearchPath
 function aStarManhattanDistanceISearchPath(graph){
 	aStarManhattanDistanceSearchPath.call(this, graph);
 }
@@ -311,9 +275,7 @@ delete aStarManhattanDistanceISearchPath.prototype.openNodes;
 delete aStarManhattanDistanceISearchPath.prototype.searchGraph;
 aStarManhattanDistanceISearchPath.prototype.reviewOpenNode = function(childrenNode, parentNode){ return; };
 aStarManhattanDistanceISearchPath.prototype.reviewClosedNode = function(childrenNode, parentNode){ return; };
-
-
-//aStarEuclideanDistanceSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+//aStarEuclideanDistanceISearchPath <- aStarEuclideanDistanceSearchPath <- aStarGenericSearchPath <- GenericSearchPath
 function aStarEuclideanDistanceISearchPath(graph){
 	aStarEuclideanDistanceSearchPath.call(this, graph);
 }
@@ -322,8 +284,7 @@ delete aStarEuclideanDistanceISearchPath.prototype.openNodes;
 delete aStarEuclideanDistanceISearchPath.prototype.searchGraph;
 aStarEuclideanDistanceISearchPath.prototype.reviewOpenNode = function(childrenNode, parentNode){ return; };
 aStarEuclideanDistanceISearchPath.prototype.reviewClosedNode = function(childrenNode, parentNode){ return; };
-
-//bestFirstSearchPath <-aStarGenericSearchPath <- GenericSearchPath
+//bestFirstISearchPath <- bestFirstSearchPath <-aStarGenericSearchPath <- GenericSearchPath
 function bestFirstISearchPath(graph){
 	bestFirstSearchPath.call(this, graph);
 }
@@ -332,5 +293,3 @@ delete bestFirstISearchPath.prototype.openNodes;
 delete bestFirstISearchPath.prototype.searchGraph;
 bestFirstISearchPath.prototype.reviewOpenNode = function(childrenNode, parentNode){ return; };
 bestFirstISearchPath.prototype.reviewClosedNode = function(childrenNode, parentNode){ return; };
-
-

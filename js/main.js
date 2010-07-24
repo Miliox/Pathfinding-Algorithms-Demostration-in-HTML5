@@ -148,7 +148,9 @@ var application = {
 			default :
 				eightEdges = true;
 		}
+		var timeStart = (new Date()).getTime();
 		game.searchPath(origem, destino);
+		var timeEnd = (new Date()).getTime();
 		graph.grid[origem.y][origem.x].text = "";
 		graphic.render();
 		var dados = this.generateStatistic();
@@ -173,6 +175,7 @@ var application = {
 		textBox.textContent += " \t(" + opened + "%)" + "\n";
 		textBox.textContent += "Nós Fechados: \t" + dados.tilesClosed;
 		textBox.textContent += " \t(" + closed + "%)" + "\n";
+		textBox.textContent += "Duração: \t" + (timeEnd - timeStart) + "ms\n";
 		textBox.textContent += "Custo Total: \t" + total;
 
 		textBox.style.border = "1px dashed black";

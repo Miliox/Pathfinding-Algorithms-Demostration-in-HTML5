@@ -25,9 +25,9 @@ function Graph(gameGrid){
 		}
 	}
 }
-Graph.prototype.createNode = function(_custo, _blocked, _cor, _text) {
+Graph.prototype.createNode = function(_terrain, _blocked, _cor, _text) {
 	return {
-		terrain : _custo,
+		terrain : _terrain,
 		custo : 0,
 		estimado : 0,
 		blocked : _blocked,
