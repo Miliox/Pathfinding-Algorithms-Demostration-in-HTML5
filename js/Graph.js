@@ -37,7 +37,7 @@ Graph.prototype.createNode = function(_terrain, _blocked, _cor, _text) {
 		cor : _cor,
 		text : _text
 	};
-}
+};
 Graph.prototype.getNodeContent = function (pos) {
 	return this.grid[pos.y][pos.x];
 };

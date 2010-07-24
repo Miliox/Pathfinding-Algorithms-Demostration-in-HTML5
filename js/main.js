@@ -102,7 +102,7 @@ var application = {
 			case "astar_dd":
 				if(admissible){
 					game = new aStarDiagonalDistanceSearchPath(graph);
-					break
+					break;
 				}
 				game = new aStarDiagonalDistanceISearchPath(graph);
 				break;
@@ -157,7 +157,7 @@ var application = {
 		var visited = ((dados.tilesVisited / dados.tiles)*100).toFixed(2);
 		var notVisited = (((dados.tiles - dados.tilesVisited) / dados.tiles)*100).toFixed(2);
 		var opened = ((dados.tilesOpen / dados.tiles)*100).toFixed(2);
-		var closed = ((dados.tilesClosed / dados.tiles)*100).toFixed(2)
+		var closed = ((dados.tilesClosed / dados.tiles)*100).toFixed(2);
 		var total = (graph.grid[destino.y][destino.x].custo);
 
 		total = function(n){
@@ -181,18 +181,16 @@ var application = {
 		textBox.style.border = "1px dashed black";
 		textBox.style.padding = "10px";
 	},
+	init : function () {
+		var botao = document.getElementById("run");
+		botao.onclick = function (){ application.runPathFinding(); };
+		botao = document.getElementById("clear");
+		botao.onclick = function (){ application.clearPathFinding(); };
+		application.setTypeMap();
+		graphic = new Graphic(document.getElementById("grid"),mapa[0].length,mapa.length);
+		application.clearPathFinding();
+		delete application.init;
+	}
 };
 
-function init(){
-	var botao = document.getElementById("run");
-	botao.onclick = function (){ application.runPathFinding(); };
-	var botao = document.getElementById("clear");
-	botao.onclick = function (){ application.clearPathFinding(); };
-	application.setTypeMap();
-	graphic = new Graphic(document.getElementById("grid"),mapa[0].length,mapa.length);
-	application.clearPathFinding();
-	delete init;
-}
-
-
-window.onload = init;
+window.onload = application.init;
