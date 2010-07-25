@@ -2,14 +2,18 @@ header {
 	position: relative;
 	width: 640px;
 	font-size: 12pt;
+	color: #000000;
+	background-color: #FFFFFF;
 }
 aside {
 	color: #000000;
+	background-color: #FFFFFF;
 	font-style: normal;
 	font-size: 10pt;
 	font-family: Verdana, sans-serif;
 }
 body {
+	color: #000000;
 	background-color: #FFFFFF;
 }
 pre {
@@ -21,6 +25,7 @@ pre {
 	border-color : black;
 	border-style : dashed;
 	border-width : 1px;
+	background-color: #FFFFFF;
 	display: none;
 }
 canvas {
@@ -33,13 +38,17 @@ canvas {
 	width: 640px;
 	left: 50%;
 	margin-left: -320px;
+	color: #000000;
 	background-color: #FFFFFF;
 }
 footer {
 	font-style: normal;
 	font-size: 12pt;
 	font-family: "Courier New", monospace;
+	color: #000000;
+	background-color: #FFFFFF;
 }
 .options {
+	color: #000000;
 	background-color: #DDDDDD;
 }

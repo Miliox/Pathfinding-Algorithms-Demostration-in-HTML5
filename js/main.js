@@ -25,7 +25,7 @@ var pathfinding = {
 			case "maze1":
 				mapa = dirtmapa;
 				origem = {x: 29, y: 19};
-				destino = {x: 1, y:30};
+				destino = {x: 4, y:15};
 				break;
 			case "maze2":
 				mapa = dirtmapa2;
@@ -125,7 +125,7 @@ var pathfinding = {
 			case "ucs":
 				if(admissible){
 					game = new UniformCostSearchPath(graph);
-					break;				
+					break;
 				}
 				game = new UniformCostSearchIPath(graph);
 				break;
