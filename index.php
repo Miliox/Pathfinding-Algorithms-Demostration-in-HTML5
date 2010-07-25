@@ -36,9 +36,21 @@
 		<!-- Source Code -->
 		<?php if($code_version != 'src'){ echo "<!--"; }?> 
 		<script type="text/javascript" src="js/src/data/maps.js"></script>
-		<script type="text/javascript" src="js/src/class/Pathfinding.js"></script>
-		<script type="text/javascript" src="js/src/classGraph.js"></script>
-		<script type="text/javascript" src="js/src/classGraphic.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/GenericSearchPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/BreadthFirstSearchPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/aStarGenericSearchPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/UniformCostSearchPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/BestFirstSearchPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/aStarDiagonalDistanceSearchPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/aStarEuclideanDistanceSearchPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/aStarManhattanDistanceSearchPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/UniformCostSearchIPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/BestFirstISearchPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/aStarDiagonalDistanceISearchPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/aStarEuclideanDistanceISearchPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding/aStarManhattanDistanceISearchPath.js"></script>
+		<script type="text/javascript" src="js/src/class/Graph.js"></script>
+		<script type="text/javascript" src="js/src/class/Graphic.js"></script>
 		<script type="text/javascript" src="js/src/main.js"></script>
 		<?php if($code_version != 'src'){ echo "-->"; }?> 
 		<style type="text/css">@import url("css/style.css");</style>
