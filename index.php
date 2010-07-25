@@ -1,7 +1,6 @@
 <?php  
 	header('Content-type: text/html; charset=utf-8');
 	if(isset($_GET['js'])){
-		
 		if(in_array($_GET['js'],array('src','yui','closure'))){
 			$code_version = $_GET['js'];
 		} else {
@@ -27,11 +26,7 @@
 		<?php if($code_version != 'closure'){ echo "-->"; }?> 
 		<!-- Yahoo Yui Compressor -->
 		<?php if($code_version != 'yui'){ echo "<!--"; }?> 
-		<script type="text/javascript" src="js/yui/maps.js"></script>
-		<script type="text/javascript" src="js/yui/Pathfinding.js"></script>
-		<script type="text/javascript" src="js/yui/Graph.js"></script>
-		<script type="text/javascript" src="js/yui/Graphic.js"></script>
-		<script type="text/javascript" src="js/yui/main.js"></script>
+		<script type="text/javascript" src="js/yui/pathfinding.js"></script>
 		<?php if($code_version != 'yui'){ echo "-->"; }?> 
 		<!-- Source Code -->
 		<?php if($code_version != 'src'){ echo "<!--"; }?> 
