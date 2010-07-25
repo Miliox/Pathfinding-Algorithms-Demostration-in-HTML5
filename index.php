@@ -23,7 +23,7 @@
 		<meta name="classification" content=""/>
 		<!-- Google Closure Compiler -->
 		<?php if($code_version != 'closure'){ echo "<!--"; }?> 
-		<script type="text/javascript" src="js/pathfinding_clousure.js"></script>
+		<script type="text/javascript" src="js/closure/pathfinding.js"></script>
 		<?php if($code_version != 'closure'){ echo "-->"; }?> 
 		<!-- Yahoo Yui Compressor -->
 		<?php if($code_version != 'yui'){ echo "<!--"; }?> 
@@ -35,11 +35,11 @@
 		<?php if($code_version != 'yui'){ echo "-->"; }?> 
 		<!-- Source Code -->
 		<?php if($code_version != 'src'){ echo "<!--"; }?> 
-		<script type="text/javascript" src="js/maps.js"></script>
-		<script type="text/javascript" src="js/Pathfinding.js"></script>
-		<script type="text/javascript" src="js/Graph.js"></script>
-		<script type="text/javascript" src="js/Graphic.js"></script>
-		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/src/data/maps.js"></script>
+		<script type="text/javascript" src="js/src/class/Pathfinding.js"></script>
+		<script type="text/javascript" src="js/src/classGraph.js"></script>
+		<script type="text/javascript" src="js/src/classGraphic.js"></script>
+		<script type="text/javascript" src="js/src/main.js"></script>
 		<?php if($code_version != 'src'){ echo "-->"; }?> 
 		<style type="text/css">@import url("css/style.css");</style>
 	</head>
