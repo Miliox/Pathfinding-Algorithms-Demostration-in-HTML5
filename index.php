@@ -1,4 +1,17 @@
-<!doctype html>
+<?php  
+	header('Content-type: text/html; charset=utf-8');
+	if(isset($_GET['js'])){
+		
+		if(in_array($_GET['js'],array('src','yui','closure'))){
+			$code_version = $_GET['js'];
+		} else {
+		$code_version = 'closure';
+		}	
+	}
+	else{
+		$code_version = 'closure';
+	}		
+?><!doctype html>
 <html lang="pt-BR">
 	<head>
 		<meta charset="utf-8"/>
@@ -9,23 +22,25 @@
 		<meta name="copyright" content="©Laboratório de Pós Graduação 2010"/>
 		<meta name="classification" content=""/>
 		<!-- Google Closure Compiler -->
-		<!--
+		<?php if($code_version != 'closure'){ echo "<!--"; }?> 
 		<script type="text/javascript" src="js/pathfinding_clousure.js"></script>
-		-->
+		<?php if($code_version != 'closure'){ echo "-->"; }?> 
 		<!-- Yahoo Yui Compressor -->
+		<?php if($code_version != 'yui'){ echo "<!--"; }?> 
 		<script type="text/javascript" src="js/yui/maps.js"></script>
 		<script type="text/javascript" src="js/yui/Pathfinding.js"></script>
 		<script type="text/javascript" src="js/yui/Graph.js"></script>
 		<script type="text/javascript" src="js/yui/Graphic.js"></script>
 		<script type="text/javascript" src="js/yui/main.js"></script>
+		<?php if($code_version != 'yui'){ echo "-->"; }?> 
 		<!-- Source Code -->
-		<!--
+		<?php if($code_version != 'src'){ echo "<!--"; }?> 
 		<script type="text/javascript" src="js/maps.js"></script>
 		<script type="text/javascript" src="js/Pathfinding.js"></script>
 		<script type="text/javascript" src="js/Graph.js"></script>
 		<script type="text/javascript" src="js/Graphic.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
-		-->
+		<?php if($code_version != 'src'){ echo "-->"; }?> 
 		<style type="text/css">@import url("css/style.css");</style>
 	</head>
 	<body>
