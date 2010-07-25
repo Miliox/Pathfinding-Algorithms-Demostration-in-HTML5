@@ -95,7 +95,7 @@ function loadMaps() {
 	maze1.onload = function(){ dirtmapa = createMapaFromImage(maze1); };
 
 	var maze2 = new Image();
-	maze2.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAgCAMAAABThhoPAAAABlBMVEUAAAD///+l2Z/dAAAAKUlEQVQ4y2NgIAEwEgloq5QIN8GVkmDqqNJRpaNKB1wp4dw9GAoiogEAFdMEflu6KpIAAAAASUVORK5CYII=';	
+	maze2.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAgCAMAAABThhoPAAAABlBMVEUAAAD///+l2Z/dAAAAQUlEQVQ4y2NgIAEwEgloq5QIR8GVkmAqfZRiOh1FKbJ6TPaoUqooRQp+AkoZiTd10CvFm6kHT4YhPnMPZEFENAAAQLEEKp9eoTUAAAAASUVORK5CYII=';	
 	maze2.onload = function(){ cmapa = createMapaFromImage(maze2); };
 
 	var maze3 = new Image();

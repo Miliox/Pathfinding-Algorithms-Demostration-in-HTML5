@@ -46,7 +46,7 @@ var pathfinding = {
 			default :
 				mapa = cleanmapa;
 				origem = {x : 20, y: 16};
-				destino = {x : 1, y: 1};
+				destino = {x : 4, y: 4};
 		}
 	},
 	generateStatistic : function(){
@@ -174,7 +174,7 @@ var pathfinding = {
 		textBox.textContent += " \t(" + opened + "%)" + "\n";
 		textBox.textContent += "Nós Fechados: \t" + dados.tilesClosed;
 		textBox.textContent += " \t(" + closed + "%)" + "\n";
-		textBox.textContent += "Duração: \t" + (timeEnd - timeStart) + "ms\n";
+		textBox.textContent += "Tempo Total: \t" + (timeEnd - timeStart) + "ms\n";
 		textBox.textContent += "Custo Total: \t" + total;
 		textBox.style.display = "block";
 	},
