@@ -81,8 +81,7 @@ var pathfinding = {
 		graph = new Graph(mapa);
 		graphic.render(graph, origem, destino);
 		var textBox = document.getElementById("estatistica");
-		textBox.style.border = "";
-		textBox.style.padding = "0px";
+		textBox.style.display = "none";
 		textBox.textContent = "";
 	},
 	run : function (){
@@ -95,7 +94,7 @@ var pathfinding = {
 					return true;
 				case "nao":
 				default:
-					return false;	
+					return false;
 			}
 		}(this.getOption("admissible"));
 		switch (this.getOption("algorithm")) {
@@ -177,9 +176,7 @@ var pathfinding = {
 		textBox.textContent += " \t(" + closed + "%)" + "\n";
 		textBox.textContent += "Duração: \t" + (timeEnd - timeStart) + "ms\n";
 		textBox.textContent += "Custo Total: \t" + total;
-
-		textBox.style.border = "1px dashed black";
-		textBox.style.padding = "10px";
+		textBox.style.display = "block";
 	},
 	init : function () {
 		var botao = document.getElementById("run");

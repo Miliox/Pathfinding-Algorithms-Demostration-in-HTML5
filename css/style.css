@@ -17,8 +17,12 @@ pre {
 	font-style: normal;
 	font-size: 12pt;
 	font-family: Verdana, sans-serif;
-	padding: 0px;
-} 
+	padding: 10px;
+	border-color : black;
+	border-style : dashed;
+	border-width : 1px;
+	display: none;
+}
 canvas {
 	width: 640px;
 	height: 480px;
