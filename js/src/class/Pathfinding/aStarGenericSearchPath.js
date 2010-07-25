@@ -43,13 +43,13 @@ aStarGenericSearchPath.prototype.reviewOpenNode = function(childrenNode, parentN
 		contentParent.custo + this.getEstimatedValue(childrenNode, parentNode);
 	if (novoCustoTotal < atualCustoTotal){
 		this.setVisitedNode(childrenNode, parentNode);
-		/*
+		///*
 		for(var i = 0;i < this.openNodes.length;i++){
 			if(this.openNodes[i].x === childrenNode.x && this.openNodes[i].y === childrenNode.y){
 				this.openNodes.splice(i,1);
 			}
 		}
-		*/
+		//*/
 		this.addOpenNode(childrenNode);
 	}
 };

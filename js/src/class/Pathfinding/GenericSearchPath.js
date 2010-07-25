@@ -25,15 +25,13 @@ GenericSearchPath.prototype.searchPath = function (start, end){
 					this.addOpenNode(adjNodes[i]);
 				}
 				else if(nodeContent.visited){
-					/*
 					if(nodeContent.closed) {
 						this.reviewClosedNode(adjNodes[i],node);
 					}
 					else {
 						this.reviewOpenNode(adjNodes[i], node);
 					}
-					*/
-					this.reviewClosedNode(adjNodes[i], node);
+					//this.reviewClosedNode(adjNodes[i], node);
 				}
 			}
 		}
