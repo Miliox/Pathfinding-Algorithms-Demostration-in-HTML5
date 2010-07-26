@@ -41,7 +41,7 @@ Graphic.prototype.render = function (graph, origem, destino) {
 			}
 		}
 	}
-	this.context.strokeStyle = "darkblue";
+	this.context.strokeStyle = "brown";
 	this.context.lineWidth = 1.5;
 	this.context.stroke();
 	this.context.beginPath();

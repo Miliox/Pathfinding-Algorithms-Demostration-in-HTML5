@@ -88,6 +88,7 @@
 						<input type="radio" name="mapa" value="blockmap2"/>Barreira2
 					</span><br />
 					<input type="button" value="RUN" id="run"/>
+					<input type="button" value="STEP" id="step"/>
 					<input type="button" value="CLEAR" id="clear"/>
 					<pre id="estatistica"></pre>
 				</form>

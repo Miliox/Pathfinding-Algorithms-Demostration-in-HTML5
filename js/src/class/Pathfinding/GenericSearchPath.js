@@ -3,16 +3,24 @@ function GenericSearchPath(graph){
 	this.openNodes = [];
 }
 GenericSearchPath.prototype.searchPath = function (start, end){
-	var node, nodeContent,adjNodes, i;
+	this.searchStart(start,end);
+	var times = 0;
+	while(this.searchLoop() === false){ times++; };
+	return times;
+};
+GenericSearchPath.prototype.searchStart = function (start, end){
 	this.start = start;
 	this.end = end;
 	this.addOpenNode(start);
 	this.setVisitedNode(start, start);
-	while(this.openIsNotEmpty()){
+};
+GenericSearchPath.prototype.searchLoop = function (){
+	var node, nodeContent,adjNodes, i;
+	if(this.openIsNotEmpty()){
 		node = this.getOpenNode();
 		nodeContent = this.searchGraph.getNodeContent(node);
 		nodeContent.closed = true;
-		if (node.x == end.x && node.y == end.y) {
+		if (node.x == this.end.x && node.y == this.end.y) {
 			this.backtrackingPath(node);
 			return true;
 		}
@@ -31,13 +39,16 @@ GenericSearchPath.prototype.searchPath = function (start, end){
 					else {
 						this.reviewOpenNode(adjNodes[i], node);
 					}
-					//this.reviewClosedNode(adjNodes[i], node);
 				}
 			}
 		}
 	}
+	else{
+		return true;
+	}
 	return false;
 };
+
 GenericSearchPath.prototype.addOpenNode = function (node){
 	this.openNodes.push(node);
 };
@@ -90,4 +101,5 @@ GenericSearchPath.prototype.backtrackingPath = function (childrenNode) {
 		childrenNode = parentNode;
 		this.searchGraph.getNodeContent(parentNode).cor = "yellow";
 	} while(oldNode.x !== childrenNode.x || oldNode.y !== childrenNode.y);
+	this.searchGraph.getNodeContent(oldNode).cor = "white";
 };

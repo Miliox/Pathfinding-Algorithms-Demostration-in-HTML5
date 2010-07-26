@@ -8,10 +8,12 @@
  * */
 
 //Variaveis Globais
-var graph, graphic, eightEdges = true, mapa, origem, destino;
+var graph, game, graphic, eightEdges = true, mapa, origem, destino;
 
 //Aplicação
 var pathfinding = {
+	id : null,
+	times : null,
 	getOption : function (name) {
 		var choices = document.getElementById("choice")[name];
 		for(var i = 0; i< choices.length; i++){
@@ -77,6 +79,7 @@ var pathfinding = {
 		return statistic;
 	},
 	clear : function (){
+		this.removeStep();
 		this.setMap();
 		graph = new Graph(mapa);
 		graphic.render(graph, origem, destino);
@@ -85,9 +88,46 @@ var pathfinding = {
 		textBox.textContent = "";
 	},
 	run : function (){
+		this.removeStep();
+		this.configure();
+		var timeStart = (new Date()).getTime();
+		this.times = game.searchPath(origem, destino);
+		var timeEnd = (new Date()).getTime();
+		this.stats(timeEnd - timeStart);
+	},
+	stats : function (time) {
+		graph.grid[origem.y][origem.x].text = "";
+		graphic.render(graph, origem, destino);
+		var dados = this.generateStatistic();
+		var visited = ((dados.tilesVisited / dados.tiles)*100).toFixed(2);
+		var notVisited = (((dados.tiles - dados.tilesVisited) / dados.tiles)*100).toFixed(2);
+		var opened = ((dados.tilesOpen / dados.tiles)*100).toFixed(2);
+		var closed = ((dados.tilesClosed / dados.tiles)*100).toFixed(2);
+		var total = (graph.grid[destino.y][destino.x].custo);
+
+		total = function(n){
+			if(n <= 0){ return "???"; }
+			return n.toFixed(3);
+		}(total);
+		var textBox = document.getElementById("estatistica");
+		textBox.textContent  = "Estatística:\n";
+		textBox.textContent += "Total de Nós: \t" + dados.tiles +"\n";
+		textBox.textContent += "Nós Visitados: \t" + dados.tilesVisited;
+		textBox.textContent += " \t(" +  visited + "%)" + "\n";
+		textBox.textContent += "Não visitados: \t" + (dados.tiles - dados.tilesVisited);
+		textBox.textContent += " \t(" + notVisited + "%)" + "\n";
+		textBox.textContent += "Nós Abertos: \t" + dados.tilesOpen;
+		textBox.textContent += " \t(" + opened + "%)" + "\n";
+		textBox.textContent += "Nós Fechados: \t" + dados.tilesClosed;
+		textBox.textContent += " \t(" + closed + "%)" + "\n";
+		textBox.textContent += "Tempo Total: \t" + time + "ms\n";
+		textBox.textContent += "Qtde. Ciclos: \t" + this.times + "\n";
+		textBox.textContent += "Custo Total: \t" + total;
+		textBox.style.display = "block";
+	},
+	configure : function (){
 		this.setMap();
 		graph = new Graph(mapa);
-		var game;
 		var admissible = function (tipo){
 			switch (tipo){
 				case "sim":
@@ -147,40 +187,35 @@ var pathfinding = {
 			default :
 				eightEdges = true;
 		}
-		var timeStart = (new Date()).getTime();
-		game.searchPath(origem, destino);
-		var timeEnd = (new Date()).getTime();
-		graph.grid[origem.y][origem.x].text = "";
+	},
+	runStep : function () {
+		this.removeStep();
+		this.configure();
+		this.times = 0;
+		game.searchStart(origem, destino);
+		this.id = window.setInterval( function () { pathfinding.step()  }, 50);
+	},
+	step : function (){
+		var fim = game.searchLoop(origem, destino);
+		if(fim === true){
+			this.removeStep();
+			this.stats("???");
+		}
+		else { this.times++; }
 		graphic.render(graph, origem, destino);
-		var dados = this.generateStatistic();
-		var visited = ((dados.tilesVisited / dados.tiles)*100).toFixed(2);
-		var notVisited = (((dados.tiles - dados.tilesVisited) / dados.tiles)*100).toFixed(2);
-		var opened = ((dados.tilesOpen / dados.tiles)*100).toFixed(2);
-		var closed = ((dados.tilesClosed / dados.tiles)*100).toFixed(2);
-		var total = (graph.grid[destino.y][destino.x].custo);
-
-		total = function(n){
-			if(n <= 0){ return "???"; }
-			return n.toFixed(3);
-		}(total);
-		var textBox = document.getElementById("estatistica");
-		textBox.textContent  = "Estatística:\n";
-		textBox.textContent += "Total de Nós: \t" + dados.tiles +"\n";
-		textBox.textContent += "Nós Visitados: \t" + dados.tilesVisited;
-		textBox.textContent += " \t(" +  visited + "%)" + "\n";
-		textBox.textContent += "Não visitados: \t" + (dados.tiles - dados.tilesVisited);
-		textBox.textContent += " \t(" + notVisited + "%)" + "\n";
-		textBox.textContent += "Nós Abertos: \t" + dados.tilesOpen;
-		textBox.textContent += " \t(" + opened + "%)" + "\n";
-		textBox.textContent += "Nós Fechados: \t" + dados.tilesClosed;
-		textBox.textContent += " \t(" + closed + "%)" + "\n";
-		textBox.textContent += "Tempo Total: \t" + (timeEnd - timeStart) + "ms\n";
-		textBox.textContent += "Custo Total: \t" + total;
-		textBox.style.display = "block";
+	},
+	removeStep : function () {
+		var id = this.id;
+		if(this.id){
+			window.clearInterval(id);
+			this.id = null;
+		}
 	},
 	init : function () {
 		var botao = document.getElementById("run");
 		botao.onclick = function (){ pathfinding.run(); };
+		botao = document.getElementById("step");
+		botao.onclick = function (){ pathfinding.runStep(); };
 		botao = document.getElementById("clear");
 		botao.onclick = function (){ pathfinding.clear(); };
 		pathfinding.setMap();
