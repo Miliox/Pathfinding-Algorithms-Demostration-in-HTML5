@@ -10,16 +10,16 @@
 function Graphic(canvas, linesX, linesY){
 	this.canvas = canvas;
 	this.context = canvas.getContext("2d");
-	this.linesX = linesX - 2;
-	this.linesY = linesY - 2;
-	this.tileX = this.canvas.width / this.linesX;
-	this.tileY = this.canvas.height / this.linesY;
 }
 Graphic.prototype.render = function (graph, origem, destino) {
 	this.context.clearRect(0,0, this.canvas.width, this.canvas.height);
+	this.linesX = graph.getWidth() - 2;
+	this.linesY = graph.getHeight() - 2;
+	this.tileX = this.canvas.width / this.linesX;
+	this.tileY = this.canvas.height / this.linesY;
 	var line,col;
-	for(line = 0; line < graph.grid.length - 1; line++){
-		for(col = 0; col < graph.grid[line].length - 1; col++){
+	for(line = 0; line < graph.getHeight() - 1; line++){
+		for(col = 0; col < graph.getWidth() - 1; col++){
 			this.drawBox(col, line, graph.grid[line+1][col+1].cor);
 		}
 	}
@@ -29,9 +29,9 @@ Graphic.prototype.render = function (graph, origem, destino) {
 	var parent, node;
 	this.context.save();
 	this.context.beginPath();
-	for(line = 0; line < graph.grid.length - 1; line++){
-		for(col = 0; col < graph.grid[line].length - 1; col++){
-			node = graph.grid[line+1][col+1];
+	for(line = 0; line < graph.getHeight() - 1; line++){
+		for(col = 0; col < graph.getWidth() - 1; col++){
+			node = graph.getNodeContent(col+1,line+1);
 			if(node.visited === true){
 				parent = node.parent;
 				this.drawLine(col, line, parent.x-1, parent.y-1);

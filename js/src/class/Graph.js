@@ -46,6 +46,16 @@ Graph.prototype.createNode = function(_terrain, _blocked, _cor) {
 		visited : false
 	};
 };
-Graph.prototype.getNodeContent = function (pos) {
-	return this.grid[pos.y][pos.x];
+Graph.prototype.getNodeContent = function (pos, y) {
+	if(arguments.length === 1){
+		return this.grid[pos.y][pos.x];
+	} else if (arguments.length === 2){
+		return this.grid[y][pos];
+	}
+};
+Graph.prototype.getWidth = function(){
+	return this.grid[0].length;
+};
+Graph.prototype.getHeight = function(){
+	return this.grid.length;
 };
