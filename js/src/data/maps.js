@@ -68,10 +68,10 @@ function createMapaFromImage (maze) {
 	return map;
 }
 var cleanmapa = function () {
-	var maxline = 32;
-	var maxcol = 42;
+	var maxline = 62;
+	var maxcol = 82;
 	var line, col;
-	var map = new Array(maxline);	
+	var map = new Array(maxline);
 	for(line = 0; line < maxline; line++){
 		map[line] = new Array(maxcol);
 		for(col = 0; col < maxcol; col++){

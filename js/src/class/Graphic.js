@@ -42,7 +42,7 @@ Graphic.prototype.render = function (graph, origem, destino) {
 		}
 	}
 	this.context.strokeStyle = "brown";
-	this.context.lineWidth = 1.5;
+	this.context.lineWidth = 1.0;
 	this.context.stroke();
 	this.context.beginPath();
 	this.context.restore();
@@ -76,7 +76,7 @@ Graphic.prototype.drawLine = function (dx, dy, sx, sy){
 Graphic.prototype.drawPoint = function (x, y){
 	x = this.tileX * x + this.tileX/2 - 0.5;
 	y = this.tileY * y + this.tileY/2 - 0.5;
-	this.context.arc(x,y, 1.5, 0, 2*Math.PI, true);
+	this.context.arc(x,y, 1.0, 0, 2*Math.PI, true);
 };
 Graphic.prototype.drawBox = function (x, y, color){
 	this.context.save();
