@@ -15,26 +15,26 @@ function Graph(gameGrid){
 		for(var i = 0;i < gameGrid[j].length; i++){
 			switch(gameGrid[j][i]){
 				case 3:
-					node = this.createNode(8, false, "#888888", "");
+					node = this.createNode(8, false, "#888888");
 					break;
 				case 2:
-					node = this.createNode(4, false, "#BBBBBB", "");
+					node = this.createNode(4, false, "#BBBBBB");
 					break;
 				case 1:
-					node = this.createNode(2, false, "#DDDDDD", "");
+					node = this.createNode(2, false, "#DDDDDD");
 					break;
 				case 0:
-					node = this.createNode(1, false, "white", "");
+					node = this.createNode(1, false, "white");
 					break;
 				case -1:
-					node = this.createNode( -1, true, "black", "");
+					node = this.createNode( -1, true, "black");
 					break;
 			}
 			this.grid[j][i] = node;
 		}
 	}
 }
-Graph.prototype.createNode = function(_terrain, _blocked, _cor, _text) {
+Graph.prototype.createNode = function(_terrain, _blocked, _cor) {
 	return {
 		blocked : _blocked,
 		closed : false,
@@ -43,7 +43,6 @@ Graph.prototype.createNode = function(_terrain, _blocked, _cor, _text) {
 		estimado : 0,
 		parent: null,
 		terrain : _terrain,
-		text : _text,
 		visited : false
 	};
 };

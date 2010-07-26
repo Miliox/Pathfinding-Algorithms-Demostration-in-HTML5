@@ -17,14 +17,35 @@ function Graphic(canvas, linesX, linesY){
 }
 Graphic.prototype.render = function (graph, origem, destino) {
 	this.context.clearRect(0,0, this.canvas.width, this.canvas.height);
-	for(var line = 0; line < graph.grid.length - 1; line++){
-		for(var col = 0; col < graph.grid[line].length - 1; col++){
+	var line,col;
+	for(line = 0; line < graph.grid.length - 1; line++){
+		for(col = 0; col < graph.grid[line].length - 1; col++){
 			this.drawBox(col, line, graph.grid[line+1][col+1].cor);
-			this.drawText(col, line, graph.grid[line+1][col+1].text);
 		}
 	}
 	this.drawBox(origem.x - 1, origem.y - 1, "rgba(255,0,0,0.5)");
 	this.drawBox(destino.x - 1, destino.y - 1, "rgba(0,0,255,0.5)");
+	//desenha arvore de busca
+	var parent, node;
+	this.context.save();
+	this.context.beginPath();
+	for(line = 0; line < graph.grid.length - 1; line++){
+		for(col = 0; col < graph.grid[line].length - 1; col++){
+			node = graph.grid[line+1][col+1];
+			if(node.visited === true){
+				parent = node.parent;
+				this.drawLine(col, line, parent.x-1, parent.y-1);
+				if(node.closed === false){
+					this.drawPoint(col, line);
+				}
+			}
+		}
+	}
+	this.context.strokeStyle = "darkblue";
+	this.context.lineWidth = 1.5;
+	this.context.stroke();
+	this.context.beginPath();
+	this.context.restore();
 	this.drawGridLines();
 };
 Graphic.prototype.drawGridLines = function () {
@@ -44,13 +65,18 @@ Graphic.prototype.drawGridLines = function () {
 	this.context.beginPath();
 	this.context.restore();
 };
-Graphic.prototype.drawText = function (x, y, text){
-	this.context.save();
-	this.context.font = "10pt Georgia";
-	this.context.textAlign ="center";
-	this.context.textBaseline = "middle";
-	this.context.fillText(text, this.tileX * x + this.tileX/2, this.tileY * y + this.tileY/2, this.tileX);
-	this.context.restore();
+Graphic.prototype.drawLine = function (dx, dy, sx, sy){
+	dx = this.tileX * dx + this.tileX/2 - 0.5;
+	dy = this.tileY * dy + this.tileY/2 - 0.5;
+	sx = this.tileX * sx + this.tileX/2 - 0.5;
+	sy = this.tileY * sy + this.tileY/2 - 0.5;
+	this.context.moveTo(sx,sy);
+	this.context.lineTo(dx,dy);
+};
+Graphic.prototype.drawPoint = function (x, y){
+	x = this.tileX * x + this.tileX/2 - 0.5;
+	y = this.tileY * y + this.tileY/2 - 0.5;
+	this.context.arc(x,y, 1.5, 0, 2*Math.PI, true);
 };
 Graphic.prototype.drawBox = function (x, y, color){
 	this.context.save();

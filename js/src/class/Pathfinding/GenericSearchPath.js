@@ -51,7 +51,6 @@ GenericSearchPath.prototype.setVisitedNode = function (childrenNode, parentNode)
 	var content = this.searchGraph.getNodeContent(childrenNode);
 	content.visited = true;
 	content.parent = parentNode;
-	content.text = this.getArrowSymbol(childrenNode, parentNode);
 };
 GenericSearchPath.prototype.reviewOpenNode = function(childrenNode, parentNode){
 	//Aqui vai a logica de revisao de Nos abertos
@@ -62,20 +61,6 @@ GenericSearchPath.prototype.reviewClosedNode = function(childrenNode, parentNode
 GenericSearchPath.prototype.openIsNotEmpty = function () {
 	if (this.openNodes.length === 0) { return false; }
 	return true;
-};
-GenericSearchPath.prototype.getArrowSymbol = function (childrenNode, parentNode) {
-	var deltaX = childrenNode.x - parentNode.x;
-	var deltaY = childrenNode.y - parentNode.y;
-
-	if (deltaX === 0 && deltaY <  0){ return "\u2191"; }
-	else if (deltaX >  0 && deltaY <  0){ return "\u2197"; }
-	else if (deltaX >  0 && deltaY === 0){ return "\u2192"; }
-	else if (deltaX >  0 && deltaY >  0){ return "\u2198"; }
-	else if (deltaX === 0 && deltaY >  0){ return "\u2193"; }
-	else if (deltaX <  0 && deltaY >  0){ return "\u2199"; }
-	else if (deltaX <  0 && deltaY === 0){ return "\u2190"; }
-	else if (deltaX <  0 && deltaY <  0){ return "\u2196"; }
-	else { return ""; }
 };
 GenericSearchPath.prototype.getMoveCusto = function (childrenNode, parentNode) {
 	var deltaX = childrenNode.x - parentNode.x;
