@@ -79,13 +79,20 @@
 						<input type="radio" name="grid_connected" value="4" />4
 						<input type="radio" name="grid_connected" value="8" checked/>8
 					</span><br />
+					Exibir Grid:
+					<span class="options">
+						<input type="radio" name="grid_show" value="sim" checked/>sim
+						<input type="radio" name="grid_show" value="nao"/>não
+					</span><br />
 					Mapa:
 					<span class="options">
 						<input type="radio" name="mapa" value="open" checked/>Vazio
 						<input type="radio" name="mapa" value="maze1"/>Labirinto1
 						<input type="radio" name="mapa" value="maze2"/>Labirinto2
 						<input type="radio" name="mapa" value="blockmap1"/>Barreira1
-						<input type="radio" name="mapa" value="blockmap2"/>Barreira2
+						<input type="radio" name="mapa" value="blockmap2"/>Barreira2<br />
+						<input type="radio" name="mapa" value="bigopen"/>Grande Vazio
+						<input type="radio" name="mapa" value="bigmaze"/>Grande Labirinto
 					</span><br />
 					<input type="button" value="RUN" id="run"/>
 					<input type="button" value="STEP" id="step"/>

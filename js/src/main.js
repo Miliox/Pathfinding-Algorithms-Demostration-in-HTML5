@@ -13,6 +13,7 @@ var graph, game, graphic, eightEdges = true, mapa, origem, destino;
 //Aplicação
 var pathfinding = {
 	id : null,
+	lines : true,
 	times : null,
 	getOption : function (name) {
 		var choices = document.getElementById("choice")[name];
@@ -43,6 +44,16 @@ var pathfinding = {
 				mapa = cmapa;
 				destino = {x: 3, y: 28};
 				origem = {x: 21, y: 15};
+				break;
+			case "bigopen" :
+				mapa = bigcleanmapa;
+				origem = {x : 41, y: 31};
+				destino = {x : 4, y: 4};
+				break;
+			case "bigmaze" :
+				mapa = bigmaze;
+				origem = {x : 77, y: 57};
+				destino = {x : 51, y: 15};
 				break;
 			case "open":
 			default :
@@ -80,9 +91,9 @@ var pathfinding = {
 	},
 	clear : function (){
 		this.removeStep();
-		this.setMap();
+		this.configure();
 		graph = new Graph(mapa);
-		graphic.render(graph, origem, destino);
+		graphic.render(graph, origem, destino, this.lines);
 		var textBox = document.getElementById("estatistica");
 		textBox.style.display = "none";
 		textBox.textContent = "";
@@ -97,7 +108,7 @@ var pathfinding = {
 	},
 	stats : function (time) {
 		graph.grid[origem.y][origem.x].text = "";
-		graphic.render(graph, origem, destino);
+		graphic.render(graph, origem, destino, this.lines);
 		var dados = this.generateStatistic();
 		var visited = ((dados.tilesVisited / dados.tiles)*100).toFixed(2);
 		var notVisited = (((dados.tiles - dados.tilesVisited) / dados.tiles)*100).toFixed(2);
@@ -187,6 +198,14 @@ var pathfinding = {
 			default :
 				eightEdges = true;
 		}
+		switch(this.getOption("grid_show")){
+			case "nao":
+				this.lines = false;
+				break;
+			case "sim":
+			default :
+				this.lines = true;
+		}
 	},
 	runStep : function () {
 		this.removeStep();
@@ -202,7 +221,7 @@ var pathfinding = {
 			this.stats("???");
 		}
 		else { this.times++; }
-		graphic.render(graph, origem, destino);
+		graphic.render(graph, origem, destino, this.lines);
 	},
 	removeStep : function () {
 		var id = this.id;

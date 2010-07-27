@@ -7,11 +7,11 @@
  *
  * */
 
-function Graphic(canvas, linesX, linesY){
+function Graphic(canvas){
 	this.canvas = canvas;
 	this.context = canvas.getContext("2d");
 }
-Graphic.prototype.render = function (graph, origem, destino) {
+Graphic.prototype.render = function (graph, origem, destino, show) {
 	this.context.clearRect(0,0, this.canvas.width, this.canvas.height);
 	this.linesX = graph.getWidth() - 2;
 	this.linesY = graph.getHeight() - 2;
@@ -46,7 +46,7 @@ Graphic.prototype.render = function (graph, origem, destino) {
 	this.context.stroke();
 	this.context.beginPath();
 	this.context.restore();
-	this.drawGridLines();
+	if (show === true){ this.drawGridLines(); }
 };
 Graphic.prototype.drawGridLines = function () {
 	this.context.beginPath();
