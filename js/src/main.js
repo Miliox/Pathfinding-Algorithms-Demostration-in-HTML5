@@ -22,6 +22,9 @@ var pathfinding = {
 		}
 		return choices[i].value;
 	},
+	isChecked : function(name){
+		return document.getElementById("choice")[name].checked;
+	},
 	setMap : function () {
 		var name_map = this.getOption("mapa");
 		switch(name_map){
@@ -139,15 +142,7 @@ var pathfinding = {
 	configure : function (){
 		this.setMap();
 		graph = new Graph(mapa);
-		var admissible = function (tipo){
-			switch (tipo){
-				case "sim":
-					return true;
-				case "nao":
-				default:
-					return false;
-			}
-		}(this.getOption("admissible"));
+		var admissible = this.isChecked("admissible");
 		switch (this.getOption("algorithm")) {
 			case "astar_dd":
 				if(admissible){
@@ -198,14 +193,7 @@ var pathfinding = {
 			default :
 				eightEdges = true;
 		}
-		switch(this.getOption("grid_show")){
-			case "nao":
-				this.lines = false;
-				break;
-			case "sim":
-			default :
-				this.lines = true;
-		}
+		this.lines = this.isChecked("grid_show");
 	},
 	runStep : function () {
 		this.removeStep();

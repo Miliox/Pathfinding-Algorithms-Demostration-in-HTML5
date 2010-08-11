@@ -69,30 +69,25 @@
 						<input type="radio" name="algorithm" value="astar_ed" />A*<abbr title="Euclidean Distance">[ED]</abbr>
 						<input type="radio" name="algorithm" value="astar_md" />A*<abbr title="Manhattan Distance">[MD]</abbr>
 					</span><br />
-					Heurística Admissível:
-					<span class="options">
-						<input type="radio" name="admissible" value="sim" checked/>Sim
-						<input type="radio" name="admissible" value="nao"/>Não<br />
-					</span>
 					Conexões do Grid:
 					<span class="options">
 						<input type="radio" name="grid_connected" value="4" />4
 						<input type="radio" name="grid_connected" value="8" checked/>8
 					</span><br />
-					Exibir Grid:
-					<span class="options">
-						<input type="radio" name="grid_show" value="sim" checked/>sim
-						<input type="radio" name="grid_show" value="nao"/>não
-					</span><br />
 					Mapa:
 					<span class="options">
 						<input type="radio" name="mapa" value="open" checked/>Vazio
-						<input type="radio" name="mapa" value="maze1"/>Labirinto1
-						<input type="radio" name="mapa" value="maze2"/>Labirinto2
+						<input type="radio" name="mapa" value="maze1"/>Maze1
+						<input type="radio" name="mapa" value="maze2"/>Maze2
 						<input type="radio" name="mapa" value="blockmap1"/>Barreira1
-						<input type="radio" name="mapa" value="blockmap2"/>Barreira2<br />
+						<input type="radio" name="mapa" value="blockmap2"/>Barreira2
 						<input type="radio" name="mapa" value="bigopen"/>Grande Vazio
-						<input type="radio" name="mapa" value="bigmaze"/>Grande Labirinto
+						<input type="radio" name="mapa" value="bigmaze"/>Big Maze
+					</span><br />
+					Outras Opções:
+					<span class="options">
+                        <input type="checkbox" name="admissible" checked/>Reavaliar Nós
+						<input type="checkbox" name="grid_show" checked/>Grid
 					</span><br />
 					<input type="button" value="RUN" id="run"/>
 					<input type="button" value="STEP" id="step"/>
