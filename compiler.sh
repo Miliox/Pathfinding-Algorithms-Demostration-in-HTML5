@@ -1,7 +1,9 @@
 #!/bin/sh
 #Une os arquivos com o Google Closure Compiler removendo os espaços em branco
+COMPILER_HOME=/home/miliox/jscompiler
+
 echo "etapa 1:unificando scripts"
-java -jar /home/mangaka/jscompiler/closure_compiler.jar \
+java -jar ${COMPILER_HOME}/closure_compiler.jar \
   --compilation_level=WHITESPACE_ONLY \
   --js=js/src/data/maps.js \
   --js=js/src/class/Pathfinding/GenericSearchPath.js \
@@ -25,14 +27,14 @@ java -jar /home/mangaka/jscompiler/closure_compiler.jar \
 echo "ok"
 #Compila com Closure Compiler de fato
 echo "etapa 2:compilando com Google Closure Compiler"
-java -jar /home/mangaka/jscompiler/closure_compiler.jar \
+java -jar ${COMPILER_HOME}/closure_compiler.jar \
   --compilation_level=SIMPLE_OPTIMIZATIONS \
   --js=js/pathfinding_ws.js \
   --js_output_file=js/closure/pathfinding.js
 echo "ok"
 #Compila a versão com Yui Compressor
 echo "etapa 3: compilando com Yui Compressor"
-java -jar /home/mangaka/jscompiler/yuicompressor-2.4.2.jar \
+java -jar ${COMPILER_HOME}/yuicompressor-2.4.2.jar \
   js/pathfinding_ws.js \
   -o js/yui/pathfinding.js
 #Deleto arquivo desnecessário
