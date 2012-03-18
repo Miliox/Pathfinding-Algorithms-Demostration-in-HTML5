@@ -1,0 +1,15 @@
+Demonstration in HTML5 of Pathfind Algorithms
+
+Pathfind Algorithms:
+	Breath First Search
+	Uniform Cost Search (Djikstra)
+	Best First Search
+	A-Star
+
+Author: Emiliano Carlos de Moraes Firmino; Msc Jucimar Maia Jr.
+Event: II Escola Regional de Informática, 2010, Manaus.
+Poster: Ferramenta WEB para demonstração de algoritmos de Pathfinding
+
+
+How To Use:
+	Clone the directory in /www and Open index.html (Require a Browser Compatible with HTML5!)
